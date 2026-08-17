@@ -1,0 +1,73 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Variables de entorno / secretos
+.env
+.env.*
+!.env.example
+
+# =========================
+# Datasets
+# =========================
+data/raw/
+data/processed/
+data/splits/
+
+# =========================
+# Modelos entrenados
+# =========================
+models/**/*.h5
+models/**/*.keras
+models/**/*.pkl
+models/**/*.joblib
+models/**/*.pt
+models/**/*.pth
+models/**/*.onnx
+models/**/*.tflite
+
+# =========================
+# Resultados generados
+# =========================
+results/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Frontend / Node
+# =========================
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Sistema operativo
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Archivos temporales
+# =========================
+*.tmp
+*.log
+*.cache
