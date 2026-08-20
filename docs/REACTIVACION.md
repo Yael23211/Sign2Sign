@@ -30,7 +30,7 @@ El código fuente y los archivos versionables del proyecto se almacenan en el re
 
 
 
-`C:\\Users\\yaelb\\OneDrive\\Documentos\\Sign2Sign`
+`C:\Users\yaelb\Sign2Sign`
 
 
 
