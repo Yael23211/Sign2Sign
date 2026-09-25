@@ -7,8 +7,12 @@ from pathlib import Path
 
 import cv2
 
-# Allow imports from the repository root when this script is
-# executed with:
+
+# ============================================================
+# CONFIGURACIÓN DEL PROYECTO
+# ============================================================
+
+# Permite importar desde la raíz del repositorio cuando se ejecuta:
 #
 # python scripts/run_sc03_webcam.py
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +22,7 @@ if str(ROOT) not in sys.path:
         0,
         str(ROOT),
     )
+
 
 from src.recognition import SignRecognizer
 from src.text import EmptyTextError, TextBuilder
@@ -54,6 +59,7 @@ MODEL_CONFIG = {
     },
 }
 
+
 MEDIAPIPE_MODEL = (
     ROOT
     / "models"
@@ -61,6 +67,20 @@ MEDIAPIPE_MODEL = (
     / "hand_landmarker.task"
 )
 
+
+# ============================================================
+# CONFIGURACIÓN DE LA VENTANA
+# ============================================================
+
+WINDOW_NAME = "Sign2Sign - SC-03"
+
+WINDOW_WIDTH = 1024
+WINDOW_HEIGHT = 768
+
+
+# ============================================================
+# ARGUMENTOS
+# ============================================================
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -89,6 +109,10 @@ def parse_args():
     return parser.parse_args()
 
 
+# ============================================================
+# SELECCIÓN DE IDIOMA
+# ============================================================
+
 def select_language(
     argument: str | None,
 ) -> str:
@@ -110,10 +134,17 @@ def select_language(
         )
 
 
+# ============================================================
+# UTILIDADES DE INTERFAZ
+# ============================================================
+
 def truncate_text(
     text: str,
     max_length: int = 55,
 ) -> str:
+    """
+    Evita que textos demasiado largos salgan de la ventana.
+    """
 
     if len(text) <= max_length:
         return text
@@ -129,14 +160,17 @@ def draw_interface(
     last_top_k,
 ):
     """
-    Draws a temporary OpenCV interface for SC-03.
+    Dibuja la interfaz temporal de SC-03.
 
-    This is not the final frontend.
+    Esta ventana NO representa el frontend final del sistema.
     """
 
     height, width = frame.shape[:2]
 
-    # Dark panels improve readability.
+    # --------------------------------------------------------
+    # PANEL SUPERIOR
+    # --------------------------------------------------------
+
     cv2.rectangle(
         frame,
         (0, 0),
@@ -145,6 +179,10 @@ def draw_interface(
         -1,
     )
 
+    # --------------------------------------------------------
+    # PANEL INFERIOR
+    # --------------------------------------------------------
+
     cv2.rectangle(
         frame,
         (0, height - 105),
@@ -152,6 +190,10 @@ def draw_interface(
         (0, 0, 0),
         -1,
     )
+
+    # --------------------------------------------------------
+    # TÍTULO
+    # --------------------------------------------------------
 
     cv2.putText(
         frame,
@@ -163,6 +205,10 @@ def draw_interface(
         2,
         cv2.LINE_AA,
     )
+
+    # --------------------------------------------------------
+    # TEXTO ACTUAL
+    # --------------------------------------------------------
 
     cv2.putText(
         frame,
@@ -190,7 +236,12 @@ def draw_interface(
         cv2.LINE_AA,
     )
 
+    # --------------------------------------------------------
+    # TOP-3
+    # --------------------------------------------------------
+
     if last_top_k:
+
         top_text = " | ".join(
             f"{label}: {probability * 100:.1f}%"
             for label, probability
@@ -208,6 +259,10 @@ def draw_interface(
             cv2.LINE_AA,
         )
 
+    # --------------------------------------------------------
+    # ESTADO
+    # --------------------------------------------------------
+
     cv2.putText(
         frame,
         f"Estado: {status}",
@@ -218,6 +273,10 @@ def draw_interface(
         1,
         cv2.LINE_AA,
     )
+
+    # --------------------------------------------------------
+    # CONTROLES
+    # --------------------------------------------------------
 
     controls_1 = (
         "ENTER: capturar letra   "
@@ -253,6 +312,10 @@ def draw_interface(
         cv2.LINE_AA,
     )
 
+
+# ============================================================
+# EJECUCIÓN PRINCIPAL
+# ============================================================
 
 def main():
 
@@ -290,6 +353,10 @@ def main():
         "Cargando reconocedor..."
     )
 
+    # --------------------------------------------------------
+    # RECONOCEDOR
+    # --------------------------------------------------------
+
     recognizer = SignRecognizer(
         source_language=language,
         mediapipe_model_path=MEDIAPIPE_MODEL,
@@ -302,22 +369,56 @@ def main():
         top_k_size=3,
     )
 
+    # --------------------------------------------------------
+    # CONSTRUCTOR TEXTUAL
+    # --------------------------------------------------------
+
     builder = TextBuilder(
         source_language=language,
         top_k_size=3,
     )
+
+    # --------------------------------------------------------
+    # CÁMARA
+    # --------------------------------------------------------
 
     camera = cv2.VideoCapture(
         args.camera
     )
 
     if not camera.isOpened():
+
         recognizer.close()
 
         raise RuntimeError(
             f"No se pudo abrir la camara "
             f"{args.camera}."
         )
+
+    # --------------------------------------------------------
+    # VENTANA
+    # --------------------------------------------------------
+    #
+    # WINDOW_NORMAL permite redimensionar manualmente
+    # la ventana.
+    #
+    # resizeWindow define solamente el tamaño inicial.
+    #
+
+    cv2.namedWindow(
+        WINDOW_NAME,
+        cv2.WINDOW_NORMAL,
+    )
+
+    cv2.resizeWindow(
+        WINDOW_NAME,
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
+    )
+
+    # --------------------------------------------------------
+    # ESTADO INICIAL
+    # --------------------------------------------------------
 
     status = (
         "Listo. Presiona ENTER "
@@ -338,20 +439,31 @@ def main():
     print("  Q         Salir sin finalizar")
     print()
 
+    # ========================================================
+    # LOOP PRINCIPAL
+    # ========================================================
+
     try:
+
         while True:
 
             ok, frame = camera.read()
 
             if not ok:
+
                 status = (
                     "No se pudo leer "
                     "el frame de la camara."
                 )
+
                 continue
 
-            # IMPORTANT:
-            # No horizontal flip is applied.
+            # IMPORTANTE:
+            # No se aplica horizontal flip.
+            #
+            # La orientación debe mantenerse igual
+            # que durante entrenamiento/evaluación.
+
             display = frame.copy()
 
             draw_interface(
@@ -363,7 +475,7 @@ def main():
             )
 
             cv2.imshow(
-                "Sign2Sign - SC-03",
+                WINDOW_NAME,
                 display,
             )
 
@@ -372,7 +484,11 @@ def main():
             if key == -1:
                 continue
 
+            # =================================================
             # ENTER
+            # Capturar y reconocer una letra
+            # =================================================
+
             if key in (10, 13):
 
                 status = (
@@ -445,38 +561,52 @@ def main():
 
                 continue
 
+            # =================================================
             # SPACE
+            # Separar palabras
+            # =================================================
+
             if key == 32:
 
                 inserted = builder.add_space()
 
                 if inserted:
+
                     status = (
                         "Separador de palabra agregado."
                     )
+
                 else:
+
                     status = (
                         "Espacio ignorado."
                     )
 
                 continue
 
+            # =================================================
             # BACKSPACE
+            # Eliminar último elemento
+            # =================================================
+
             if key in (8, 127):
 
                 removed = builder.backspace()
 
                 if removed is None:
+
                     status = (
                         "No hay elementos para borrar."
                     )
 
                 elif removed.kind == "space":
+
                     status = (
                         "Espacio eliminado."
                     )
 
                 else:
+
                     status = (
                         f"Letra eliminada: "
                         f"{removed.value}"
@@ -484,10 +614,15 @@ def main():
 
                 continue
 
+            # =================================================
             # ESC
+            # Limpiar secuencia
+            # =================================================
+
             if key == 27:
 
                 builder.clear()
+
                 last_top_k = ()
 
                 status = (
@@ -500,18 +635,24 @@ def main():
 
                 continue
 
-            # T -> finalize
+            # =================================================
+            # T
+            # Finalizar secuencia
+            # =================================================
+
             if key in (
                 ord("t"),
                 ord("T"),
             ):
 
                 try:
+
                     finalized_result = (
                         builder.finalize()
                     )
 
                 except EmptyTextError:
+
                     status = (
                         "No se puede finalizar "
                         "una secuencia vacia."
@@ -551,7 +692,11 @@ def main():
 
                 break
 
-            # Q -> exit without finalizing.
+            # =================================================
+            # Q
+            # Salir sin finalizar
+            # =================================================
+
             if key in (
                 ord("q"),
                 ord("Q"),
@@ -564,6 +709,10 @@ def main():
 
                 break
 
+    # ========================================================
+    # LIBERACIÓN DE RECURSOS
+    # ========================================================
+
     finally:
 
         camera.release()
@@ -571,6 +720,10 @@ def main():
         cv2.destroyAllWindows()
 
         recognizer.close()
+
+    # ========================================================
+    # RESULTADO FINAL
+    # ========================================================
 
     if finalized_result is not None:
 
