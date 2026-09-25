@@ -1,0 +1,1506 @@
+{
+  "name": "Sign2Sign Canonical Vocabulary",
+  "version": "2.0",
+  "description": "Canonical closed vocabulary for SC-04 correction and translation.",
+  "counts": {
+    "total": 71,
+    "atomic": 65,
+    "expression": 6
+  },
+  "concepts": [
+    {
+      "concept_id": "HELLO",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HOLA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HELLO",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HOLA"
+        ],
+        "original_asl_en": [
+          "HELLO"
+        ]
+      }
+    },
+    {
+      "concept_id": "GOODBYE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ADIÓS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "GOODBYE",
+        "aliases": [
+          "BYE"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "ADIÓS"
+        ],
+        "original_asl_en": [
+          "GOODBYE",
+          "BYE"
+        ]
+      }
+    },
+    {
+      "concept_id": "HOW_ARE_YOU",
+      "type": "expression",
+      "spanish": {
+        "canonical": "CÓMO ESTÁS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HOW ARE YOU",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CÓMO_ESTÁS"
+        ],
+        "original_asl_en": [
+          "HOW-YOU",
+          "HOW-ARE-YOU"
+        ]
+      }
+    },
+    {
+      "concept_id": "THANK_YOU",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "GRACIAS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "THANK YOU",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "GRACIAS"
+        ],
+        "original_asl_en": [
+          "THANK-YOU"
+        ]
+      }
+    },
+    {
+      "concept_id": "YOU_ARE_WELCOME",
+      "type": "expression",
+      "spanish": {
+        "canonical": "DE NADA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "YOU'RE WELCOME",
+        "aliases": [
+          "WELCOME"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "DE_NADA"
+        ],
+        "original_asl_en": [
+          "YOU-WELCOME",
+          "WELCOME"
+        ]
+      }
+    },
+    {
+      "concept_id": "PLEASE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "POR FAVOR",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "PLEASE",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "POR_FAVOR"
+        ],
+        "original_asl_en": [
+          "PLEASE"
+        ]
+      }
+    },
+    {
+      "concept_id": "SORRY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "PERDÓN",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SORRY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "PERDÓN"
+        ],
+        "original_asl_en": [
+          "SORRY"
+        ]
+      }
+    },
+    {
+      "concept_id": "EXCUSE_ME",
+      "type": "expression",
+      "spanish": {
+        "canonical": "CON PERMISO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "EXCUSE ME",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CON_PERMISO"
+        ],
+        "original_asl_en": [
+          "EXCUSE-ME"
+        ]
+      }
+    },
+    {
+      "concept_id": "NICE_TO_MEET_YOU",
+      "type": "expression",
+      "spanish": {
+        "canonical": "MUCHO GUSTO CONOCERTE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "NICE TO MEET YOU",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "MUCHO_GUSTO_CONOCERTE"
+        ],
+        "original_asl_en": [
+          "NICE-MEET-YOU"
+        ]
+      }
+    },
+    {
+      "concept_id": "FIRST_PERSON_SINGULAR",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "YO",
+        "aliases": [
+          "MÍ"
+        ]
+      },
+      "english": {
+        "canonical": "I",
+        "aliases": [
+          "ME"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "YO",
+          "MI"
+        ],
+        "original_asl_en": [
+          "I",
+          "ME"
+        ]
+      }
+    },
+    {
+      "concept_id": "SECOND_PERSON",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "TÚ",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "YOU",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "TÚ"
+        ],
+        "original_asl_en": [
+          "YOU"
+        ]
+      }
+    },
+    {
+      "concept_id": "HE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ÉL",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HE",
+        "aliases": [
+          "HIM"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "ÉL"
+        ],
+        "original_asl_en": [
+          "HE",
+          "HIM"
+        ]
+      }
+    },
+    {
+      "concept_id": "SHE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ELLA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SHE",
+        "aliases": [
+          "HER"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "ELLA"
+        ],
+        "original_asl_en": [
+          "SHE",
+          "HER"
+        ]
+      }
+    },
+    {
+      "concept_id": "WE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "NOSOTROS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WE",
+        "aliases": [
+          "US"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "NOSOTROS"
+        ],
+        "original_asl_en": [
+          "WE",
+          "US"
+        ]
+      }
+    },
+    {
+      "concept_id": "YOU_ALL",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "USTEDES",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "YOU ALL",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "USTEDES"
+        ],
+        "original_asl_en": [
+          "YOU-ALL"
+        ]
+      }
+    },
+    {
+      "concept_id": "THEY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ELLOS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "THEY",
+        "aliases": [
+          "THEM"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "ELLOS"
+        ],
+        "original_asl_en": [
+          "THEY",
+          "THEM"
+        ]
+      }
+    },
+    {
+      "concept_id": "NAME",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "NOMBRE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "NAME",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "NOMBRE"
+        ],
+        "original_asl_en": [
+          "NAME"
+        ]
+      }
+    },
+    {
+      "concept_id": "MAN",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HOMBRE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "MAN",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HOMBRE"
+        ],
+        "original_asl_en": [
+          "MAN"
+        ]
+      }
+    },
+    {
+      "concept_id": "WOMAN",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "MUJER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WOMAN",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "MUJER"
+        ],
+        "original_asl_en": [
+          "WOMAN"
+        ]
+      }
+    },
+    {
+      "concept_id": "MOTHER",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "MAMÁ",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "MOTHER",
+        "aliases": [
+          "MOM"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "MAMÁ"
+        ],
+        "original_asl_en": [
+          "MOM",
+          "MOTHER"
+        ]
+      }
+    },
+    {
+      "concept_id": "FATHER",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "PAPÁ",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "FATHER",
+        "aliases": [
+          "DAD"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "PAPÁ"
+        ],
+        "original_asl_en": [
+          "DAD",
+          "FATHER"
+        ]
+      }
+    },
+    {
+      "concept_id": "BROTHER",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HERMANO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "BROTHER",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HERMANO"
+        ],
+        "original_asl_en": [
+          "BROTHER"
+        ]
+      }
+    },
+    {
+      "concept_id": "SISTER",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HERMANA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SISTER",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HERMANA"
+        ],
+        "original_asl_en": [
+          "SISTER"
+        ]
+      }
+    },
+    {
+      "concept_id": "BOY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "NIÑO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "BOY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "NIÑO"
+        ],
+        "original_asl_en": [
+          "BOY"
+        ]
+      }
+    },
+    {
+      "concept_id": "GIRL",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "NIÑA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "GIRL",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "NIÑA"
+        ],
+        "original_asl_en": [
+          "GIRL"
+        ]
+      }
+    },
+    {
+      "concept_id": "FRIEND",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "AMIGO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "FRIEND",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "AMIGO"
+        ],
+        "original_asl_en": [
+          "FRIEND"
+        ]
+      }
+    },
+    {
+      "concept_id": "STUDENT",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ESTUDIANTE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "STUDENT",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "ESTUDIANTE"
+        ],
+        "original_asl_en": [
+          "STUDENT"
+        ]
+      }
+    },
+    {
+      "concept_id": "WHAT",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "QUÉ",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WHAT",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "QUÉ"
+        ],
+        "original_asl_en": [
+          "WHAT"
+        ]
+      }
+    },
+    {
+      "concept_id": "WHO",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "QUIÉN",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WHO",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "QUIÉN"
+        ],
+        "original_asl_en": [
+          "WHO"
+        ]
+      }
+    },
+    {
+      "concept_id": "WHERE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "DÓNDE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WHERE",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "DÓNDE"
+        ],
+        "original_asl_en": [
+          "WHERE"
+        ]
+      }
+    },
+    {
+      "concept_id": "WHEN",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CUÁNDO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WHEN",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CUÁNDO"
+        ],
+        "original_asl_en": [
+          "WHEN"
+        ]
+      }
+    },
+    {
+      "concept_id": "HOW",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CÓMO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HOW",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CÓMO"
+        ],
+        "original_asl_en": [
+          "HOW"
+        ]
+      }
+    },
+    {
+      "concept_id": "WHY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "POR QUÉ",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WHY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "POR_QUÉ"
+        ],
+        "original_asl_en": [
+          "WHY"
+        ]
+      }
+    },
+    {
+      "concept_id": "HOW_MANY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CUÁNTOS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HOW MANY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CUÁNTOS"
+        ],
+        "original_asl_en": [
+          "HOW-MANY"
+        ]
+      }
+    },
+    {
+      "concept_id": "WHAT_IS_YOUR_NAME",
+      "type": "expression",
+      "spanish": {
+        "canonical": "CÓMO TE LLAMAS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WHAT IS YOUR NAME",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CÓMO_TE_LLAMAS"
+        ],
+        "original_asl_en": [
+          "YOUR-NAME-WHAT"
+        ]
+      }
+    },
+    {
+      "concept_id": "HOW_DO_YOU_FEEL",
+      "type": "expression",
+      "spanish": {
+        "canonical": "CÓMO TE SIENTES",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HOW DO YOU FEEL",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CÓMO_TE_SIENTES"
+        ],
+        "original_asl_en": [
+          "FEEL-HOW",
+          "HOW-YOU-FEEL"
+        ]
+      }
+    },
+    {
+      "concept_id": "FINE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "BIEN",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "FINE",
+        "aliases": [
+          "GOOD"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "BIEN"
+        ],
+        "original_asl_en": [
+          "FINE",
+          "GOOD"
+        ]
+      }
+    },
+    {
+      "concept_id": "BAD",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "MAL",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "BAD",
+        "aliases": [
+          "NOT GOOD"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "MAL"
+        ],
+        "original_asl_en": [
+          "BAD",
+          "NOT-GOOD"
+        ]
+      }
+    },
+    {
+      "concept_id": "HAPPY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "FELIZ",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HAPPY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "FELIZ"
+        ],
+        "original_asl_en": [
+          "HAPPY"
+        ]
+      }
+    },
+    {
+      "concept_id": "SAD",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "TRISTE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SAD",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "TRISTE"
+        ],
+        "original_asl_en": [
+          "SAD"
+        ]
+      }
+    },
+    {
+      "concept_id": "ANGRY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ENOJADO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "ANGRY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "ENOJADO"
+        ],
+        "original_asl_en": [
+          "ANGRY"
+        ]
+      }
+    },
+    {
+      "concept_id": "WORRIED",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "PREOCUPADO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WORRIED",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "PREOCUPADO"
+        ],
+        "original_asl_en": [
+          "WORRIED"
+        ]
+      }
+    },
+    {
+      "concept_id": "TIRED",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CANSADO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "TIRED",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CANSADO"
+        ],
+        "original_asl_en": [
+          "TIRED"
+        ]
+      }
+    },
+    {
+      "concept_id": "SICK",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ENFERMO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SICK",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "ENFERMO"
+        ],
+        "original_asl_en": [
+          "SICK"
+        ]
+      }
+    },
+    {
+      "concept_id": "HUNGRY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HAMBRE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HUNGRY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HAMBRE"
+        ],
+        "original_asl_en": [
+          "HUNGRY"
+        ]
+      }
+    },
+    {
+      "concept_id": "WATER",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "AGUA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WATER",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "AGUA"
+        ],
+        "original_asl_en": [
+          "WATER"
+        ]
+      }
+    },
+    {
+      "concept_id": "FOOD",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "COMIDA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "FOOD",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "COMIDA"
+        ],
+        "original_asl_en": [
+          "FOOD"
+        ]
+      }
+    },
+    {
+      "concept_id": "AFRAID",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "MIEDO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "AFRAID",
+        "aliases": [
+          "SCARED"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "MIEDO"
+        ],
+        "original_asl_en": [
+          "AFRAID",
+          "SCARED"
+        ]
+      }
+    },
+    {
+      "concept_id": "WANT",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "QUERER",
+        "aliases": [
+          "QUIERES"
+        ]
+      },
+      "english": {
+        "canonical": "WANT",
+        "aliases": [
+          "YOU WANT"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "QUERER",
+          "QUIERES"
+        ],
+        "original_asl_en": [
+          "WANT",
+          "YOU-WANT"
+        ]
+      }
+    },
+    {
+      "concept_id": "NOT",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "NO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "NOT",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "NO_QUERER",
+          "NO_PODER",
+          "NO_SABER",
+          "NO_ENTENDER",
+          "NO_TENER",
+          "NO_HAY",
+          "NO_GUSTAR",
+          "NO_CONOCER"
+        ],
+        "original_asl_en": [
+          "DON'T-WANT",
+          "NOT-WANT",
+          "CAN'T",
+          "DON'T-KNOW",
+          "DON'T-UNDERSTAND",
+          "DON'T-HAVE",
+          "NONE",
+          "DON'T-LIKE"
+        ]
+      }
+    },
+    {
+      "concept_id": "CAN",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "PODER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "CAN",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "PODER"
+        ],
+        "original_asl_en": [
+          "CAN"
+        ]
+      }
+    },
+    {
+      "concept_id": "KNOW_INFORMATION",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "SABER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "KNOW",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "SABER"
+        ],
+        "original_asl_en": [
+          "KNOW"
+        ]
+      }
+    },
+    {
+      "concept_id": "UNDERSTAND",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ENTENDER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "UNDERSTAND",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "ENTENDER"
+        ],
+        "original_asl_en": [
+          "UNDERSTAND"
+        ]
+      }
+    },
+    {
+      "concept_id": "HAVE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "TENER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HAVE",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "TENER",
+          "HAY"
+        ],
+        "original_asl_en": [
+          "HAVE"
+        ]
+      }
+    },
+    {
+      "concept_id": "EXIST",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HAY",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "THERE IS / THERE ARE",
+        "aliases": [
+          "EXIST"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "TENER",
+          "HAY"
+        ],
+        "original_asl_en": [
+          "HAVE"
+        ]
+      }
+    },
+    {
+      "concept_id": "LIKE",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "GUSTAR",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "LIKE",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "GUSTAR"
+        ],
+        "original_asl_en": [
+          "LIKE"
+        ]
+      }
+    },
+    {
+      "concept_id": "KNOW_PERSON",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CONOCER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "KNOW",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CONOCER"
+        ],
+        "original_asl_en": [
+          "KNOW",
+          "MEET"
+        ]
+      }
+    },
+    {
+      "concept_id": "MEET",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CONOCER POR PRIMERA VEZ",
+        "aliases": [
+          "CONOCER"
+        ]
+      },
+      "english": {
+        "canonical": "MEET",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CONOCER"
+        ],
+        "original_asl_en": [
+          "KNOW",
+          "MEET"
+        ]
+      }
+    },
+    {
+      "concept_id": "HELP",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "AYUDAR",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HELP",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "AYUDAR"
+        ],
+        "original_asl_en": [
+          "HELP"
+        ]
+      }
+    },
+    {
+      "concept_id": "TODAY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HOY",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "TODAY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HOY"
+        ],
+        "original_asl_en": [
+          "TODAY"
+        ]
+      }
+    },
+    {
+      "concept_id": "YESTERDAY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "AYER",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "YESTERDAY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "AYER"
+        ],
+        "original_asl_en": [
+          "YESTERDAY"
+        ]
+      }
+    },
+    {
+      "concept_id": "TOMORROW",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "MAÑANA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "TOMORROW",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "MAÑANA"
+        ],
+        "original_asl_en": [
+          "TOMORROW"
+        ]
+      }
+    },
+    {
+      "concept_id": "NOW",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "AHORA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "NOW",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "AHORA"
+        ],
+        "original_asl_en": [
+          "NOW"
+        ]
+      }
+    },
+    {
+      "concept_id": "LATER",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "DESPUÉS",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "LATER",
+        "aliases": [
+          "AFTER"
+        ]
+      },
+      "source": {
+        "original_lsm_es": [
+          "DESPUÉS"
+        ],
+        "original_asl_en": [
+          "LATER",
+          "AFTER"
+        ]
+      }
+    },
+    {
+      "concept_id": "FINISH",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "TERMINAR",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "FINISH",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "TERMINAR",
+          "FIN"
+        ],
+        "original_asl_en": [
+          "FINISH"
+        ]
+      }
+    },
+    {
+      "concept_id": "END",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "FIN",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "END",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "TERMINAR",
+          "FIN"
+        ],
+        "original_asl_en": [
+          "FINISH"
+        ]
+      }
+    },
+    {
+      "concept_id": "SCHOOL",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "ESCUELA",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SCHOOL",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "ESCUELA"
+        ],
+        "original_asl_en": [
+          "SCHOOL"
+        ]
+      }
+    },
+    {
+      "concept_id": "HOSPITAL",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "HOSPITAL",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "HOSPITAL",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "HOSPITAL"
+        ],
+        "original_asl_en": [
+          "HOSPITAL"
+        ]
+      }
+    },
+    {
+      "concept_id": "STREET",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "CALLE",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "STREET",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "CALLE"
+        ],
+        "original_asl_en": [
+          "STREET"
+        ]
+      }
+    },
+    {
+      "concept_id": "SUBWAY",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "METRO",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "SUBWAY",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "METRO"
+        ],
+        "original_asl_en": [
+          "SUBWAY"
+        ]
+      }
+    },
+    {
+      "concept_id": "WORK",
+      "type": "atomic",
+      "spanish": {
+        "canonical": "TRABAJAR",
+        "aliases": []
+      },
+      "english": {
+        "canonical": "WORK",
+        "aliases": []
+      },
+      "source": {
+        "original_lsm_es": [
+          "TRABAJAR"
+        ],
+        "original_asl_en": [
+          "WORK"
+        ]
+      }
+    }
+  ]
+}
