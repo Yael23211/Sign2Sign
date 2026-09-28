@@ -3,6 +3,11 @@ from .contracts import (
     TranslationResult,
 )
 
+from .gemini_client import (
+    GeminiCallResult,
+    GeminiClient,
+)
+
 from .prompt_builder import (
     PromptBuilder,
 )
@@ -21,6 +26,8 @@ from .vocabulary import (
 __all__ = [
     "CorrectionRequest",
     "TranslationResult",
+    "GeminiCallResult",
+    "GeminiClient",
     "PromptBuilder",
     "ResponseValidator",
     "ResponseValidationError",

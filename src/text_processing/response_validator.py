@@ -25,12 +25,14 @@ class ResponseValidator:
     Validates the structured response returned by the LLM.
 
     The validator does not perform linguistic correction.
+
     Its responsibility is to guarantee that the response:
 
     - is valid JSON;
     - contains the required fields;
     - uses the expected data types;
     - contains only canonical Sign2Sign concept IDs;
+    - reports unresolved content when appropriate;
     - can safely be converted into TranslationResult.
     """
 
@@ -57,27 +59,49 @@ class ResponseValidator:
         TranslationResult.
         """
 
+        # ----------------------------------------------------
+        # 1. Parse response
+        # ----------------------------------------------------
+
         data = self._parse_response(
             response
         )
+
+        # ----------------------------------------------------
+        # 2. Required fields
+        # ----------------------------------------------------
 
         self._validate_fields(
             data
         )
 
+        # ----------------------------------------------------
+        # 3. Text fields
+        #
+        # Text fields must always be strings.
+        #
+        # However, they are allowed to be empty when the
+        # complete input is unresolved and no canonical
+        # concepts could be recovered.
+        # ----------------------------------------------------
+
         corrected_text = (
-            self._validate_text_field(
+            self._validate_string_field(
                 data,
                 "corrected_text",
             )
         )
 
         translated_text = (
-            self._validate_text_field(
+            self._validate_string_field(
                 data,
                 "translated_text",
             )
         )
+
+        # ----------------------------------------------------
+        # 4. Concepts
+        # ----------------------------------------------------
 
         concepts = (
             self._validate_concepts(
@@ -85,17 +109,66 @@ class ResponseValidator:
             )
         )
 
+        # ----------------------------------------------------
+        # 5. Unresolved content
+        # ----------------------------------------------------
+
         unresolved = (
             self._validate_unresolved(
                 data["unresolved"]
             )
         )
 
+        # ----------------------------------------------------
+        # 6. Semantic consistency
+        # ----------------------------------------------------
+
+        # A response cannot resolve nothing and also report
+        # nothing as unresolved.
         if not concepts and not unresolved:
+
             raise ResponseValidationError(
                 "The response must contain at least "
-                "one concept or one unresolved item."
+                "one canonical concept or one "
+                "unresolved item."
             )
+
+        # If at least one canonical concept was recovered,
+        # the model must provide corrected and translated
+        # natural-language text.
+        if concepts:
+
+            if not corrected_text:
+
+                raise ResponseValidationError(
+                    "'corrected_text' cannot be empty "
+                    "when canonical concepts were "
+                    "resolved."
+                )
+
+            if not translated_text:
+
+                raise ResponseValidationError(
+                    "'translated_text' cannot be empty "
+                    "when canonical concepts were "
+                    "resolved."
+                )
+
+        # If there are no concepts but there is unresolved
+        # content, empty corrected/translated text is valid.
+        #
+        # Example:
+        #
+        # {
+        #   "corrected_text": "",
+        #   "translated_text": "",
+        #   "concepts": [],
+        #   "unresolved": ["ZXQW"]
+        # }
+
+        # ----------------------------------------------------
+        # 7. Build validated result
+        # ----------------------------------------------------
 
         return TranslationResult(
             source_language=(
@@ -121,6 +194,10 @@ class ResponseValidator:
             ),
         )
 
+    # ========================================================
+    # PARSING
+    # ========================================================
+
     @staticmethod
     def _parse_response(
         response: str | dict[str, Any],
@@ -136,22 +213,26 @@ class ResponseValidator:
             response,
             str,
         ):
+
             raise ResponseValidationError(
-                "The LLM response must be a JSON string "
-                "or a dictionary."
+                "The LLM response must be "
+                "a JSON string or a dictionary."
             )
 
         if not response.strip():
+
             raise ResponseValidationError(
                 "The LLM response cannot be empty."
             )
 
         try:
+
             data = json.loads(
                 response
             )
 
         except json.JSONDecodeError as exc:
+
             raise ResponseValidationError(
                 "The LLM response is not valid JSON."
             ) from exc
@@ -160,11 +241,16 @@ class ResponseValidator:
             data,
             dict,
         ):
+
             raise ResponseValidationError(
                 "The JSON root must be an object."
             )
 
         return data
+
+    # ========================================================
+    # REQUIRED FIELDS
+    # ========================================================
 
     def _validate_fields(
         self,
@@ -181,6 +267,7 @@ class ResponseValidator:
         )
 
         if missing_fields:
+
             missing = ", ".join(
                 sorted(
                     missing_fields
@@ -192,11 +279,25 @@ class ResponseValidator:
                 f"{missing}"
             )
 
+    # ========================================================
+    # TEXT FIELDS
+    # ========================================================
+
     @staticmethod
-    def _validate_text_field(
+    def _validate_string_field(
         data: dict[str, Any],
         field: str,
     ) -> str:
+        """
+        Validates that a field is a string.
+
+        Empty strings are allowed at this stage because
+        whether they are valid depends on the semantic
+        result:
+
+        - concepts found -> text must not be empty;
+        - only unresolved content -> text may be empty.
+        """
 
         value = data.get(
             field
@@ -206,18 +307,16 @@ class ResponseValidator:
             value,
             str,
         ):
+
             raise ResponseValidationError(
                 f"'{field}' must be a string."
             )
 
-        value = value.strip()
+        return value.strip()
 
-        if not value:
-            raise ResponseValidationError(
-                f"'{field}' cannot be empty."
-            )
-
-        return value
+    # ========================================================
+    # CONCEPTS
+    # ========================================================
 
     def _validate_concepts(
         self,
@@ -228,6 +327,7 @@ class ResponseValidator:
             concepts,
             list,
         ):
+
             raise ResponseValidationError(
                 "'concepts' must be a list."
             )
@@ -243,6 +343,7 @@ class ResponseValidator:
                 concept_id,
                 str,
             ):
+
                 raise ResponseValidationError(
                     "Every item in 'concepts' "
                     "must be a string."
@@ -255,6 +356,7 @@ class ResponseValidator:
             )
 
             if not concept_id:
+
                 raise ResponseValidationError(
                     f"Concept at position "
                     f"{position} is empty."
@@ -263,6 +365,7 @@ class ResponseValidator:
             if not self.vocabulary.has_concept(
                 concept_id
             ):
+
                 raise ResponseValidationError(
                     f"Unknown canonical concept: "
                     f"{concept_id}"
@@ -274,6 +377,10 @@ class ResponseValidator:
 
         return validated
 
+    # ========================================================
+    # UNRESOLVED
+    # ========================================================
+
     @staticmethod
     def _validate_unresolved(
         unresolved: Any,
@@ -283,6 +390,7 @@ class ResponseValidator:
             unresolved,
             list,
         ):
+
             raise ResponseValidationError(
                 "'unresolved' must be a list."
             )
@@ -298,6 +406,7 @@ class ResponseValidator:
                 item,
                 str,
             ):
+
                 raise ResponseValidationError(
                     "Every item in 'unresolved' "
                     "must be a string."
@@ -306,6 +415,7 @@ class ResponseValidator:
             item = item.strip()
 
             if not item:
+
                 raise ResponseValidationError(
                     f"Unresolved item at position "
                     f"{position} is empty."

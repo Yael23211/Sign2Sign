@@ -32,6 +32,7 @@ class ResponseValidatorTests(
 
     @classmethod
     def setUpClass(cls):
+
         cls.vocabulary = Vocabulary(
             VOCAB_PATH
         )
@@ -67,13 +68,22 @@ class ResponseValidatorTests(
         )
 
         self.valid_response = {
-            "corrected_text": "AGUA",
-            "translated_text": "WATER",
+            "corrected_text":
+                "AGUA",
+
+            "translated_text":
+                "WATER",
+
             "concepts": [
                 "WATER",
             ],
+
             "unresolved": [],
         }
+
+    # ========================================================
+    # VALID RESPONSES
+    # ========================================================
 
     def test_valid_dictionary_response(self):
 
@@ -117,6 +127,10 @@ class ResponseValidatorTests(
             ),
         )
 
+    # ========================================================
+    # UNKNOWN CONCEPTS
+    # ========================================================
+
     def test_unknown_concept_is_rejected(self):
 
         response = {
@@ -137,16 +151,25 @@ class ResponseValidatorTests(
         with self.assertRaises(
             ResponseValidationError
         ):
+
             self.validator.validate(
                 response,
                 self.request,
             )
 
+    # ========================================================
+    # REQUIRED FIELDS
+    # ========================================================
+
     def test_missing_field_is_rejected(self):
 
         response = {
-            "corrected_text": "AGUA",
-            "translated_text": "WATER",
+            "corrected_text":
+                "AGUA",
+
+            "translated_text":
+                "WATER",
+
             "concepts": [
                 "WATER",
             ],
@@ -155,10 +178,15 @@ class ResponseValidatorTests(
         with self.assertRaises(
             ResponseValidationError
         ):
+
             self.validator.validate(
                 response,
                 self.request,
             )
+
+    # ========================================================
+    # INVALID JSON
+    # ========================================================
 
     def test_invalid_json_is_rejected(self):
 
@@ -171,48 +199,74 @@ class ResponseValidatorTests(
         with self.assertRaises(
             ResponseValidationError
         ):
+
             self.validator.validate(
                 raw,
                 self.request,
             )
 
-    def test_empty_corrected_text_is_rejected(
+    # ========================================================
+    # EMPTY TEXT WITH RESOLVED CONCEPTS
+    # ========================================================
+
+    def test_empty_corrected_text_is_rejected_when_concepts_exist(
         self,
     ):
 
         response = {
-            "corrected_text": " ",
-            "translated_text": "WATER",
+            "corrected_text":
+                "",
+
+            "translated_text":
+                "WATER",
+
             "concepts": [
                 "WATER",
             ],
+
             "unresolved": [],
         }
 
         with self.assertRaises(
             ResponseValidationError
         ):
+
             self.validator.validate(
                 response,
                 self.request,
             )
+
+    # ========================================================
+    # CONCEPT TYPE
+    # ========================================================
 
     def test_concepts_must_be_list(self):
 
         response = {
-            "corrected_text": "AGUA",
-            "translated_text": "WATER",
-            "concepts": "WATER",
+            "corrected_text":
+                "AGUA",
+
+            "translated_text":
+                "WATER",
+
+            "concepts":
+                "WATER",
+
             "unresolved": [],
         }
 
         with self.assertRaises(
             ResponseValidationError
         ):
+
             self.validator.validate(
                 response,
                 self.request,
             )
+
+    # ========================================================
+    # PARTIALLY UNRESOLVED
+    # ========================================================
 
     def test_unresolved_is_allowed(self):
 
@@ -251,6 +305,10 @@ class ResponseValidatorTests(
             ),
         )
 
+    # ========================================================
+    # ONLY UNRESOLVED WITH TEXT
+    # ========================================================
+
     def test_only_unresolved_is_allowed(self):
 
         response = {
@@ -277,24 +335,97 @@ class ResponseValidatorTests(
             (),
         )
 
+        self.assertEqual(
+            result.unresolved,
+            (
+                "XYZ",
+            ),
+        )
+
+    # ========================================================
+    # ONLY UNRESOLVED WITH EMPTY TEXT
+    #
+    # This is the new case discovered during the real
+    # robustness test with ZXQW.
+    # ========================================================
+
+    def test_empty_text_is_allowed_when_everything_is_unresolved(
+        self,
+    ):
+
+        response = {
+            "corrected_text":
+                "",
+
+            "translated_text":
+                "",
+
+            "concepts": [],
+
+            "unresolved": [
+                "ZXQW",
+            ],
+        }
+
+        result = self.validator.validate(
+            response,
+            self.request,
+        )
+
+        self.assertEqual(
+            result.corrected_text,
+            "",
+        )
+
+        self.assertEqual(
+            result.translated_text,
+            "",
+        )
+
+        self.assertEqual(
+            result.concepts,
+            (),
+        )
+
+        self.assertEqual(
+            result.unresolved,
+            (
+                "ZXQW",
+            ),
+        )
+
+    # ========================================================
+    # NOTHING RESOLVED AND NOTHING REPORTED
+    # ========================================================
+
     def test_empty_concepts_and_unresolved_are_rejected(
         self,
     ):
 
         response = {
-            "corrected_text": "AGUA",
-            "translated_text": "WATER",
+            "corrected_text":
+                "",
+
+            "translated_text":
+                "",
+
             "concepts": [],
+
             "unresolved": [],
         }
 
         with self.assertRaises(
             ResponseValidationError
         ):
+
             self.validator.validate(
                 response,
                 self.request,
             )
+
+    # ========================================================
+    # EXPRESSION
+    # ========================================================
 
     def test_expression_concept_is_valid(self):
 
@@ -324,16 +455,25 @@ class ResponseValidatorTests(
             ),
         )
 
+    # ========================================================
+    # NORMALIZATION
+    # ========================================================
+
     def test_concept_ids_are_normalized_to_uppercase(
         self,
     ):
 
         response = {
-            "corrected_text": "AGUA",
-            "translated_text": "WATER",
+            "corrected_text":
+                "AGUA",
+
+            "translated_text":
+                "WATER",
+
             "concepts": [
                 "water",
             ],
+
             "unresolved": [],
         }
 
