@@ -5,6 +5,7 @@ import json
 from src.text_processing.contracts import (
     CorrectionRequest,
 )
+
 from src.text_processing.vocabulary import (
     Vocabulary,
 )
@@ -20,6 +21,7 @@ class PromptBuilder:
     - Top-k candidates and probabilities
     - source / target languages
     - closed canonical vocabulary
+    - linguistic normalization rules
     - required JSON response schema
     """
 
@@ -116,51 +118,106 @@ VOCABULARY RULES
 4. Normalize conjugated forms to their canonical concept.
 
    Example:
-   QUIERO, QUIERES, QUEREMOS
-   may correspond to WANT when the context supports it.
+   QUIERO, QUIERES and QUEREMOS may all correspond to WANT,
+   but the grammatical person expressed by the conjugation
+   must also be represented when an appropriate canonical
+   pronoun concept exists.
 
-5. Negation is compositional.
+5. Recover semantic participants that are implicit in verb
+   conjugation when the vocabulary can represent them.
+
+   Examples:
+
+   QUIERO AGUA
+   -> FIRST_PERSON_SINGULAR, WANT, WATER
+
+   NO ENTIENDO
+   -> FIRST_PERSON_SINGULAR, NOT, UNDERSTAND
+
+   QUIERES AGUA
+   -> SECOND_PERSON, WANT, WATER
+
+   The concepts array must not omit a representable subject
+   merely because it was implicit in the source-language verb.
+
+6. Negation is compositional.
 
    Example:
+
    NO QUIERO
-   should use:
-   ["NOT", "WANT"]
+   -> FIRST_PERSON_SINGULAR, NOT, WANT
 
-6. KNOW_INFORMATION represents knowing information or facts.
+7. KNOW_INFORMATION represents knowing information or facts.
 
-7. KNOW_PERSON represents knowing or being acquainted with
+8. KNOW_PERSON represents knowing or being acquainted with
    a person.
 
-8. MEET represents meeting a person for the first time.
+9. MEET represents meeting a person for the first time.
 
-9. HAVE represents possession.
+10. HAVE represents possession.
 
-10. EXIST represents existence, such as:
+11. EXIST represents existence, such as:
     HAY / THERE IS / THERE ARE.
 
-11. FINISH represents the action of finishing.
+12. FINISH represents the action of finishing.
 
-12. END represents the concept of an end or conclusion.
+13. END represents the concept of an end or conclusion.
 
-13. Entries with type "expression" may be selected as a
-    complete semantic unit when the input meaning matches the
-    expression.
+14. Entries with type "expression" may be selected as a
+    complete semantic unit when that expression already
+    represents the full intended meaning.
 
-14. Use the Top-k letter candidates to resolve recognition
+    Example:
+
+    CÓMO ESTÁS
+    -> HOW_ARE_YOU
+
+    In this case it is not necessary to additionally emit
+    SECOND_PERSON or HOW if HOW_ARE_YOU already preserves the
+    complete intended meaning.
+
+15. The concepts array is NOT a list of keywords.
+
+    It is the ordered canonical semantic representation that
+    the next Sign2Sign subsystem will consume.
+
+16. Preserve every part of the meaning that can be represented
+    by the available canonical vocabulary.
+
+17. Prefer the smallest ordered set of canonical concepts that
+    preserves the complete representable meaning.
+
+18. Do not omit a canonical concept only because the natural
+    translated sentence expresses that information
+    grammatically rather than as an independent word.
+
+19. Use the Top-k letter candidates to resolve recognition
     mistakes when useful.
 
-15. Do not automatically choose the Top-1 character if another
+20. Do not automatically choose the Top-1 character if another
     candidate produces a substantially more plausible word
     within the available vocabulary.
 
-16. Do not force a correction if the information is
+21. A correct interpretation may still be selected when the
+    required letter is not present in Top-k, if the recognized
+    text and closed vocabulary provide sufficiently strong
+    linguistic evidence.
+
+22. Do not force a correction if the information is
     insufficient.
 
-17. If part of the input cannot be represented using the
+23. If part of the input cannot be represented using the
     closed vocabulary, include that part in "unresolved".
 
-18. Do not represent unavailable meaning using an unrelated
+24. Do not represent unavailable meaning using an unrelated
     concept.
+
+25. If nothing can be interpreted reliably:
+
+    - return an empty "corrected_text";
+    - return an empty "translated_text";
+    - return an empty "concepts" array;
+    - place the unresolved input in "unresolved".
 
 
 TASK
@@ -173,10 +230,47 @@ B. Translate the corrected meaning into natural text in the
    TARGET bridge language.
 
 C. Determine the ordered canonical Sign2Sign concept IDs that
-   represent the meaning.
+   preserve ALL meaning representable by the closed
+   vocabulary.
 
-D. Identify any portion that cannot be represented using the
+D. Recover implicit grammatical participants, such as the
+   subject encoded by verb conjugation, whenever an available
+   canonical concept can represent them.
+
+E. Prefer a single expression concept when it already
+   represents the complete intended meaning.
+
+F. Identify any portion that cannot be represented using the
    available vocabulary.
+
+
+CONSISTENCY REQUIREMENT
+
+The natural-language translation and the concepts array must
+describe the same meaning.
+
+For example, this is inconsistent:
+
+translated_text:
+"I DO NOT UNDERSTAND"
+
+concepts:
+["NOT", "UNDERSTAND"]
+
+because the first-person subject is representable using
+FIRST_PERSON_SINGULAR.
+
+The consistent result is:
+
+translated_text:
+"I DO NOT UNDERSTAND"
+
+concepts:
+[
+  "FIRST_PERSON_SINGULAR",
+  "NOT",
+  "UNDERSTAND"
+]
 
 
 RESPONSE FORMAT
