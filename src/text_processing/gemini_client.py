@@ -73,7 +73,7 @@ class GeminiClient:
         "gemini-3.5-flash-lite"
     )
 
-    DEFAULT_TIMEOUT_SECONDS = 10.0
+    DEFAULT_TIMEOUT_SECONDS = 25.0
 
     def __init__(
         self,
