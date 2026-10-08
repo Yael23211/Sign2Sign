@@ -1,9 +1,8 @@
-from src.resources.resource_repository import (
+from .resource_repository import (
     ResourceCatalogError,
     ResourceRepository,
     VisualResource,
 )
-
 
 __all__ = [
     "ResourceCatalogError",

@@ -1,3 +1,12 @@
 {
-  "resources": []
+  "resources": [
+    {
+      "concept_id": "HELLO",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HELLO.mp4",
+      "type": "video",
+      "available": true
+    }
+  ]
 }

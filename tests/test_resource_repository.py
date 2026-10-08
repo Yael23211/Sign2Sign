@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from src.resources.resource_repository import (
     ResourceCatalogError,
@@ -11,392 +12,578 @@ from src.resources.resource_repository import (
 )
 
 
-class ResourceRepositoryTests(
-    unittest.TestCase
-):
+class TestResourceRepository(unittest.TestCase):
 
-    def _write_catalog(
-        self,
-        root: Path,
-        resources: list,
-    ) -> Path:
+    def setUp(self) -> None:
 
-        catalog_dir = (
-            root
-            / "data"
-            / "resources"
+        self.temp_dir = tempfile.TemporaryDirectory()
+
+        self.project_root = Path(
+            self.temp_dir.name
         )
 
-        catalog_dir.mkdir(
+        self.catalog_path = (
+            self.project_root
+            / "data"
+            / "resources"
+            / "visual_resources.json"
+        )
+
+        self.catalog_path.parent.mkdir(
             parents=True,
             exist_ok=True,
         )
 
-        catalog_path = (
-            catalog_dir
-            / "visual_resources.json"
+        (
+            self.project_root
+            / "resources"
+            / "asl"
+        ).mkdir(
+            parents=True,
+            exist_ok=True,
         )
 
-        with catalog_path.open(
+        (
+            self.project_root
+            / "resources"
+            / "lsm"
+        ).mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        self.project_root_patch = patch(
+            "src.resources.resource_repository.PROJECT_ROOT",
+            self.project_root,
+        )
+
+        self.project_root_patch.start()
+
+    def tearDown(self) -> None:
+
+        self.project_root_patch.stop()
+        self.temp_dir.cleanup()
+
+    def write_catalog(
+        self,
+        resources: list,
+    ) -> None:
+
+        data = {
+            "resources": resources
+        }
+
+        with self.catalog_path.open(
             "w",
             encoding="utf-8",
         ) as file:
 
             json.dump(
-                {
-                    "resources":
-                        resources
-                },
+                data,
                 file,
+                ensure_ascii=False,
+                indent=2,
             )
 
-        return catalog_path
-
-    def _valid_resource(
-        self,
-        **overrides,
+    @staticmethod
+    def local_resource(
+        concept_id: str = "HELLO",
+        language: str = "ASL",
+        available: bool = True,
     ) -> dict:
 
-        resource = {
+        return {
             "concept_id":
-                "WATER",
+                concept_id,
             "language":
-                "ASL",
-            "path":
-                "resources/asl/WATER.mp4",
+                language,
+            "delivery":
+                "local",
+            "location":
+                (
+                    f"resources/"
+                    f"{language.lower()}/"
+                    f"{concept_id}.mp4"
+                ),
             "type":
                 "video",
             "available":
-                True,
+                available,
         }
 
-        resource.update(
-            overrides
-        )
+    @staticmethod
+    def online_resource(
+        concept_id: str = "HELLO",
+        language: str = "LSM",
+        available: bool = True,
+    ) -> dict:
 
-        return resource
+        return {
+            "concept_id":
+                concept_id,
+            "language":
+                language,
+            "delivery":
+                "online",
+            "location":
+                (
+                    "https://example.com/"
+                    f"{language.lower()}/"
+                    f"{concept_id.lower()}"
+                ),
+            "type":
+                "video",
+            "available":
+                available,
+        }
 
     def test_empty_catalog_loads(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        self.write_catalog([])
 
-            root = Path(tmp)
+        repository = ResourceRepository(
+            self.catalog_path
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [],
-            )
+        self.assertEqual(
+            repository.list_resources(),
+            [],
+        )
 
-            repository = (
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
-            )
-
-            self.assertEqual(
-                len(repository),
-                0,
-            )
-
-    def test_valid_resource_can_be_found(
+    def test_valid_local_resource_is_found(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        self.write_catalog(
+            [
+                self.local_resource()
+            ]
+        )
 
-            root = Path(tmp)
+        repository = ResourceRepository(
+            self.catalog_path
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource()
-                ],
-            )
+        resource = repository.get_resource(
+            "HELLO",
+            "ASL",
+            "local",
+        )
 
-            repository = (
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
-            )
+        self.assertIsNotNone(
+            resource
+        )
 
-            resource = (
-                repository.get_resource(
-                    "WATER",
-                    "ASL",
-                )
-            )
+        self.assertEqual(
+            resource.concept_id,
+            "HELLO",
+        )
 
-            self.assertIsNotNone(
-                resource
-            )
+        self.assertEqual(
+            resource.language,
+            "ASL",
+        )
 
-            self.assertEqual(
-                resource.concept_id,
-                "WATER",
-            )
+        self.assertEqual(
+            resource.delivery,
+            "local",
+        )
 
-    def test_lookup_accepts_lowercase(
+    def test_lookup_normalizes_case(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        self.write_catalog(
+            [
+                self.local_resource()
+            ]
+        )
 
-            root = Path(tmp)
+        repository = ResourceRepository(
+            self.catalog_path
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource()
-                ],
-            )
+        resource = repository.get_resource(
+            "hello",
+            "asl",
+            "LOCAL",
+        )
 
-            repository = (
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
-            )
+        self.assertIsNotNone(
+            resource
+        )
 
-            resource = (
-                repository.get_resource(
-                    "water",
-                    "asl",
-                )
-            )
+        self.assertEqual(
+            resource.concept_id,
+            "HELLO",
+        )
 
-            self.assertIsNotNone(
-                resource
-            )
-
-    def test_duplicate_resource_is_rejected(
+    def test_duplicate_same_delivery_is_rejected(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        resource = self.local_resource()
 
-            root = Path(tmp)
+        self.write_catalog(
+            [
+                resource,
+                dict(resource),
+            ]
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource(),
-                    self._valid_resource(),
-                ],
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
             )
 
-            with self.assertRaises(
-                ResourceCatalogError
-            ):
+    def test_local_and_online_can_coexist(
+        self,
+    ) -> None:
 
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
+        self.write_catalog(
+            [
+                self.local_resource(
+                    concept_id="HELLO",
+                    language="LSM",
+                ),
+                self.online_resource(
+                    concept_id="HELLO",
+                    language="LSM",
+                ),
+            ]
+        )
+
+        repository = ResourceRepository(
+            self.catalog_path
+        )
+
+        local_resource = (
+            repository.get_resource(
+                "HELLO",
+                "LSM",
+                "local",
+            )
+        )
+
+        online_resource = (
+            repository.get_resource(
+                "HELLO",
+                "LSM",
+                "online",
+            )
+        )
+
+        self.assertIsNotNone(
+            local_resource
+        )
+
+        self.assertIsNotNone(
+            online_resource
+        )
+
+        self.assertNotEqual(
+            local_resource.delivery,
+            online_resource.delivery,
+        )
 
     def test_invalid_language_is_rejected(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        resource = self.local_resource()
 
-            root = Path(tmp)
+        resource["language"] = "XYZ"
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource(
-                        language="XYZ"
-                    )
-                ],
+        self.write_catalog(
+            [resource]
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
             )
 
-            with self.assertRaises(
-                ResourceCatalogError
-            ):
+    def test_invalid_delivery_is_rejected(
+        self,
+    ) -> None:
 
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
+        resource = self.local_resource()
+
+        resource["delivery"] = "cloud"
+
+        self.write_catalog(
+            [resource]
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
+            )
 
     def test_invalid_type_is_rejected(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        resource = self.local_resource()
 
-            root = Path(tmp)
+        resource["type"] = "image"
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource(
-                        type="image"
-                    )
-                ],
+        self.write_catalog(
+            [resource]
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
             )
 
-            with self.assertRaises(
-                ResourceCatalogError
-            ):
-
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
-
-    def test_unsafe_path_is_rejected(
+    def test_unsafe_local_location_is_rejected(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        resource = self.local_resource()
 
-            root = Path(tmp)
+        resource["location"] = (
+            "../HELLO.mp4"
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource(
-                        path=(
-                            "../WATER.mp4"
-                        )
-                    )
-                ],
+        self.write_catalog(
+            [resource]
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
             )
 
-            with self.assertRaises(
-                ResourceCatalogError
-            ):
+    def test_invalid_online_url_is_rejected(
+        self,
+    ) -> None:
 
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
+        resource = self.online_resource()
+
+        resource["location"] = (
+            "youtube.com/video"
+        )
+
+        self.write_catalog(
+            [resource]
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
+            )
 
     def test_available_must_be_boolean(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        resource = self.local_resource()
 
-            root = Path(tmp)
+        resource["available"] = "true"
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource(
-                        available="yes"
-                    )
-                ],
+        self.write_catalog(
+            [resource]
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            ResourceRepository(
+                self.catalog_path
             )
 
-            with self.assertRaises(
-                ResourceCatalogError
-            ):
-
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
-
-    def test_is_available_requires_file(
+    def test_local_availability_requires_file(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        self.write_catalog(
+            [
+                self.local_resource()
+            ]
+        )
 
-            root = Path(tmp)
+        repository = ResourceRepository(
+            self.catalog_path
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource()
-                ],
+        self.assertFalse(
+            repository.is_available(
+                "HELLO",
+                "ASL",
+                "local",
             )
+        )
 
-            repository = (
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
-                )
+        video_path = (
+            self.project_root
+            / "resources"
+            / "asl"
+            / "HELLO.mp4"
+        )
+
+        video_path.touch()
+
+        self.assertTrue(
+            repository.is_available(
+                "HELLO",
+                "ASL",
+                "local",
             )
+        )
 
-            self.assertFalse(
-                repository.is_available(
-                    "WATER",
-                    "ASL",
-                )
-            )
-
-            video_path = (
-                root
-                / "resources"
-                / "asl"
-                / "WATER.mp4"
-            )
-
-            video_path.parent.mkdir(
-                parents=True,
-                exist_ok=True,
-            )
-
-            video_path.touch()
-
-            self.assertTrue(
-                repository.is_available(
-                    "WATER",
-                    "ASL",
-                )
-            )
-
-    def test_unavailable_flag_returns_false(
+    def test_online_resource_is_available_structurally(
         self,
-    ):
+    ) -> None:
 
-        with tempfile.TemporaryDirectory() as tmp:
+        self.write_catalog(
+            [
+                self.online_resource()
+            ]
+        )
 
-            root = Path(tmp)
+        repository = ResourceRepository(
+            self.catalog_path
+        )
 
-            catalog = self._write_catalog(
-                root,
-                [
-                    self._valid_resource(
-                        available=False
-                    )
-                ],
+        self.assertTrue(
+            repository.is_available(
+                "HELLO",
+                "LSM",
+                "online",
             )
+        )
 
-            video_path = (
-                root
-                / "resources"
-                / "asl"
-                / "WATER.mp4"
-            )
+    def test_available_false_returns_false(
+        self,
+    ) -> None:
 
-            video_path.parent.mkdir(
-                parents=True,
-                exist_ok=True,
-            )
-
-            video_path.touch()
-
-            repository = (
-                ResourceRepository(
-                    catalog_path=catalog,
-                    project_root=root,
+        self.write_catalog(
+            [
+                self.online_resource(
+                    available=False
                 )
+            ]
+        )
+
+        repository = ResourceRepository(
+            self.catalog_path
+        )
+
+        self.assertFalse(
+            repository.is_available(
+                "HELLO",
+                "LSM",
+                "online",
+            )
+        )
+
+    def test_resolve_path_rejects_online_resource(
+        self,
+    ) -> None:
+
+        self.write_catalog(
+            [
+                self.online_resource()
+            ]
+        )
+
+        repository = ResourceRepository(
+            self.catalog_path
+        )
+
+        resource = repository.get_resource(
+            "HELLO",
+            "LSM",
+            "online",
+        )
+
+        self.assertIsNotNone(
+            resource
+        )
+
+        with self.assertRaises(
+            ResourceCatalogError
+        ):
+            repository.resolve_path(
+                resource
             )
 
-            self.assertFalse(
-                repository.is_available(
-                    "WATER",
-                    "ASL",
-                )
+    def test_list_resources_can_filter(
+        self,
+    ) -> None:
+
+        self.write_catalog(
+            [
+                self.local_resource(
+                    concept_id="HELLO",
+                    language="ASL",
+                ),
+                self.online_resource(
+                    concept_id="HELLO",
+                    language="ASL",
+                ),
+                self.local_resource(
+                    concept_id="WATER",
+                    language="LSM",
+                ),
+            ]
+        )
+
+        repository = ResourceRepository(
+            self.catalog_path
+        )
+
+        asl_local = (
+            repository.list_resources(
+                language="ASL",
+                delivery="local",
             )
+        )
+
+        asl_online = (
+            repository.list_resources(
+                language="ASL",
+                delivery="online",
+            )
+        )
+
+        lsm_local = (
+            repository.list_resources(
+                language="LSM",
+                delivery="local",
+            )
+        )
+
+        self.assertEqual(
+            len(asl_local),
+            1,
+        )
+
+        self.assertEqual(
+            len(asl_online),
+            1,
+        )
+
+        self.assertEqual(
+            len(lsm_local),
+            1,
+        )
 
 
 if __name__ == "__main__":
