@@ -1,0 +1,508 @@
+{
+  "resources": [
+    {
+      "concept_id": "HELLO",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HELLO.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "GOODBYE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/GOODBYE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "THANK_YOU",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/THANK_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YOU_ARE_WELCOME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/YOU_ARE_WELCOME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "PLEASE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/PLEASE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SORRY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SORRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "EXCUSE_ME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/EXCUSE_ME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FIRST_PERSON_SINGULAR",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FIRST_PERSON_SINGULAR.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SECOND_PERSON",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SECOND_PERSON.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "THEY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/THEY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NAME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NAME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MAN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/MAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WOMAN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WOMAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MOTHER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/MOTHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FATHER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FATHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BROTHER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/BROTHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SISTER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SISTER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BOY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/BOY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "GIRL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/GIRL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FRIEND",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FRIEND.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "STUDENT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/STUDENT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHAT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHAT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHERE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHERE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHEN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHEN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHO",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHO.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_MANY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOW_MANY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FINE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FINE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BAD",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/BAD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HAPPY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HAPPY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SAD",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SAD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "ANGRY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/ANGRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WORRIED",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WORRIED.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TIRED",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/TIRED.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SICK",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SICK.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WATER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WATER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "AFRAID",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/AFRAID.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WANT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WANT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NOT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NOT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "CAN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/CAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "KNOW_INFORMATION",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/KNOW_INFORMATION.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "KNOW_PERSON",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/KNOW_PERSON.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "UNDERSTAND",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/UNDERSTAND.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HAVE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HAVE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "EXIST",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/EXIST.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "LIKE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/LIKE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MEET",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/MEET.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HELP",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HELP.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TODAY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/TODAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YESTERDAY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/YESTERDAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NOW",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NOW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "LATER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/LATER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FINISH",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FINISH.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "END",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/END.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SCHOOL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SCHOOL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOSPITAL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOSPITAL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WORK",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WORK.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FOOD",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FOOD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HUNGRY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HUNGRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "STREET",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/STREET.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TOMORROW",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/TOMORROW.mp4",
+      "type": "video",
+      "available": true
+    }
+  ]
+}

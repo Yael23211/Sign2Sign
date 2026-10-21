@@ -118,6 +118,7 @@ VOCABULARY RULES
 4. Normalize conjugated forms to their canonical concept.
 
    Example:
+
    QUIERO, QUIERES and QUEREMOS may all correspond to WANT,
    but the grammatical person expressed by the conjugation
    must also be represented when an appropriate canonical
@@ -164,8 +165,9 @@ VOCABULARY RULES
 13. END represents the concept of an end or conclusion.
 
 14. Entries with type "expression" may be selected as a
-    complete semantic unit when that expression already
-    represents the full intended meaning.
+    complete semantic unit when that expression represents the
+    full meaning of the SPECIFIC input segment from which it
+    was derived.
 
     Example:
 
@@ -173,46 +175,168 @@ VOCABULARY RULES
     -> HOW_ARE_YOU
 
     In this case it is not necessary to additionally emit
-    SECOND_PERSON or HOW if HOW_ARE_YOU already preserves the
-    complete intended meaning.
+    SECOND_PERSON or HOW because HOW_ARE_YOU already preserves
+    the complete meaning of the segment "CÓMO ESTÁS".
+
+    IMPORTANT:
+    An expression concept may only replace the input segment
+    whose meaning it represents.
+
+    It MUST NOT absorb, replace, or cause the omission of an
+    independent semantic unit that appears before or after that
+    segment.
+
+    Example:
+
+    HOLA CÓMO ESTÁS
+    -> HELLO, HOW_ARE_YOU
+
+    NOT:
+
+    HOLA CÓMO ESTÁS
+    -> HOW_ARE_YOU
 
 15. The concepts array is NOT a list of keywords.
 
     It is the ordered canonical semantic representation that
     the next Sign2Sign subsystem will consume.
 
-16. Preserve every part of the meaning that can be represented
-    by the available canonical vocabulary.
+16. Preserve every independent semantic unit that can be
+    reasonably recovered from the recognized input.
 
-17. Prefer the smallest ordered set of canonical concepts that
-    preserves the complete representable meaning.
+    Correction may modify misspelled words, but it MUST NOT
+    silently delete a word or semantic segment merely because
+    the resulting sentence would sound more natural, concise,
+    redundant, or conversational without it.
 
-18. Do not omit a canonical concept only because the natural
+17. Every meaningful portion of the recognized input must be
+    accounted for in the final result.
+
+    Each meaningful portion must end in one of these states:
+
+    a) corrected and represented by one or more canonical
+       concepts; or
+
+    b) included in "unresolved" when it cannot be interpreted
+       or represented reliably.
+
+    A meaningful input segment MUST NEVER disappear silently.
+
+18. Prefer the smallest ordered set of canonical concepts that
+    preserves the complete representable meaning, but ONLY
+    after preserving all independent semantic units.
+
+    "Smallest" means avoiding redundant concepts inside the
+    same semantic unit.
+
+    It does NOT mean removing a separate word or idea from the
+    input.
+
+19. Do not omit a canonical concept only because the natural
     translated sentence expresses that information
     grammatically rather than as an independent word.
 
-19. Use the Top-k letter candidates to resolve recognition
+20. Before producing the final JSON, perform a semantic
+    coverage check over the recognized input.
+
+    Verify that every meaningful word or recoverable segment
+    has either:
+
+    - contributed to corrected_text and to the canonical
+      concepts; or
+
+    - been included in unresolved.
+
+    Do not treat a recoverable word as noise only because
+    another nearby expression already forms a valid sentence.
+
+    Example:
+
+    Recognized input:
+    HOLS CONO ESSAS
+
+    A reasonable correction is:
+    HOLA CÓMO ESTÁS
+
+    Therefore the semantic coverage is:
+
+    HOLS
+    -> HOLA
+    -> HELLO
+
+    CONO ESSAS
+    -> CÓMO ESTÁS
+    -> HOW_ARE_YOU
+
+    Expected concepts:
+    [
+      "HELLO",
+      "HOW_ARE_YOU"
+    ]
+
+    "HELLO" must not be omitted simply because HOW_ARE_YOU is
+    itself a complete conversational expression.
+
+21. Before selecting canonical concepts, divide the corrected
+    input into the smallest NON-OVERLAPPING semantic segments
+    that can be mapped to the canonical vocabulary.
+
+    If two adjacent segments independently map to different
+    canonical concepts, preserve BOTH concepts, even when
+    their meanings are pragmatically similar, redundant, or
+    could be combined into a more natural sentence.
+
+    An expression concept may consume multiple words only when
+    those words belong to that canonical expression itself.
+
+    It MUST NOT consume an adjacent word or phrase that
+    independently maps to another canonical concept.
+
+    Example:
+
+    PERDÓN | CON PERMISO
+    -> SORRY | EXCUSE_ME
+
+    Expected concepts:
+    [
+      "SORRY",
+      "EXCUSE_ME"
+    ]
+
+    NOT:
+    [
+      "EXCUSE_ME"
+    ]
+
+    General rule:
+
+    If a corrected word or phrase has a direct mapping to an
+    available canonical concept, that concept must not be
+    omitted unless that exact word or phrase is part of a
+    larger canonical expression selected from the vocabulary.
+
+22. Use the Top-k letter candidates to resolve recognition
     mistakes when useful.
 
-20. Do not automatically choose the Top-1 character if another
+23. Do not automatically choose the Top-1 character if another
     candidate produces a substantially more plausible word
     within the available vocabulary.
 
-21. A correct interpretation may still be selected when the
+24. A correct interpretation may still be selected when the
     required letter is not present in Top-k, if the recognized
     text and closed vocabulary provide sufficiently strong
     linguistic evidence.
 
-22. Do not force a correction if the information is
+25. Do not force a correction if the information is
     insufficient.
 
-23. If part of the input cannot be represented using the
+26. If part of the input cannot be represented using the
     closed vocabulary, include that part in "unresolved".
 
-24. Do not represent unavailable meaning using an unrelated
+27. Do not represent unavailable meaning using an unrelated
     concept.
 
-25. If nothing can be interpreted reliably:
+28. If nothing can be interpreted reliably:
 
     - return an empty "corrected_text";
     - return an empty "translated_text";
@@ -237,17 +361,37 @@ D. Recover implicit grammatical participants, such as the
    subject encoded by verb conjugation, whenever an available
    canonical concept can represent them.
 
-E. Prefer a single expression concept when it already
-   represents the complete intended meaning.
+E. Prefer a single expression concept when it represents the
+   complete meaning of its corresponding input segment, but do
+   not use an expression to absorb or remove independent
+   semantic units from neighboring segments.
 
 F. Identify any portion that cannot be represented using the
    available vocabulary.
+
+G. Before returning the response, verify semantic coverage:
+   every meaningful portion of the recognized input must
+   either be represented in the corrected/translated meaning
+   and concepts, or appear in unresolved.
+
+H. Verify that canonical concepts were assigned from
+   non-overlapping semantic segments.
+
+   Do not merge neighboring segments merely because their
+   meanings are similar or because the resulting translation
+   would sound more natural.
 
 
 CONSISTENCY REQUIREMENT
 
 The natural-language translation and the concepts array must
 describe the same meaning.
+
+The corrected text must also preserve all reliably recoverable
+meaning from the recognized input.
+
+Do not improve fluency by deleting an independent recoverable
+word or phrase.
 
 For example, this is inconsistent:
 
@@ -270,6 +414,30 @@ concepts:
   "FIRST_PERSON_SINGULAR",
   "NOT",
   "UNDERSTAND"
+]
+
+A second consistency example:
+
+corrected_text:
+"PERDÓN CON PERMISO"
+
+concepts:
+[
+  "EXCUSE_ME"
+]
+
+is inconsistent because the independently representable
+segment "PERDÓN" was omitted.
+
+The consistent result is:
+
+corrected_text:
+"PERDÓN CON PERMISO"
+
+concepts:
+[
+  "SORRY",
+  "EXCUSE_ME"
 ]
 
 

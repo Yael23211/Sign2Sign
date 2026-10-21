@@ -1,2 +1,143 @@
 ﻿concept_id,language,delivery,source_name,source_url,notes
 HELLO,ASL,local,ASL Signbank,https://aslsignbank.com/dictionary/gloss/482.html,N/A
+GOODBYE,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/425.html,N/A
+THANK_YOU,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1198.html,N/A
+YOU_ARE_WELCOME,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1421.html,N/A
+PLEASE,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/527.html,N/A
+SORRY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/566.html,N/A
+EXCUSE_ME,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/833.html,N/A
+FIRST_PERSON_SINGULAR,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1711.html,N/A
+SECOND_PERSON,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1712.html,N/A
+THEY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1999.html,N/A
+WE,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1416.html,N/A
+NAME,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/511.html,N/A
+MAN,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/503.html,NO
+WOMAN,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1443.html,NO
+MOTHER,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/509.html,NO
+FATHER,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/452.html,NO
+BROTHER,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/52.html,NO
+SISTER,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/2962.html,NO
+BOY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/377.html,NO
+GIRL,ASL,local,ASL SIGNBANL,https://aslsignbank.com/dictionary/gloss/465.html,NO
+FRIEND,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/462.html,NO
+STUDENT,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/828.html,NO
+WHAT,ASL,local,ASL SIGNABANK,https://aslsignbank.com/dictionary/gloss/1425.html,NO
+WHERE,ASL,local,ASL SIGNABNK,https://aslsignbank.com/dictionary/gloss/1427.html,NO
+WHEN,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1426.html,NO
+WHO,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/2236.html,NO
+HOW,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/487.html,NO
+WHY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1431.html,NO
+HOW_MANY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/2542.html,NO
+FINE,ASL,local,https://aslsignbank.com/dictionary/gloss/455.html,https://aslsignbank.com/dictionary/gloss/455.html,NO
+BAD,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/29.html,NO
+HAPPY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/476.html,NO
+SAD,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/245.html,NO
+ANGRY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/15.html,NO
+WORRIED,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/850.html,NO
+TIRED,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/297.html,NO
+SICK,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/255.html,NO
+WATER,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1414.html,NO
+AFRAID,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/246.html,NO
+WANT,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1409.html,NO
+NOT,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/515.html,NO
+CAN,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/426.html,NO
+KNOW_INFORMATION,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/554.html,NO
+KNOW_PERSON,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/554.html,NO
+UNDERSTAND,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/311.html,NO
+HAVE,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1779.html,NO
+EXIST,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1779.html,NO
+LIKE,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/498.html,NO
+MEET,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1620.html,NO
+HELP,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/483.html,NO
+TODAY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/299.html,NO
+YESTERDAY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/327.html,NO
+NOW,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/517.html,NO
+LATER,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/169.html,NO
+FINISH,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/456.html,NO
+END,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1308.html,NO
+SCHOOL,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/247.html,NO
+HOSPITAL,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1759.html,NO
+WORK,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/1450.html,NO
+FOOD,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/399.html,NO
+HUNGRY,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/488.html,NO
+STREET,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/278.html,NO
+TOMORROW,ASL,local,ASL SIGNBANK,https://aslsignbank.com/dictionary/gloss/301.html,NO
+HE,ASL,local,Grabación propia,,Grabación propia para el prototipo Sign2Sign. HE y SHE comparten la misma realización visual deíctica de tercera persona. Recurso no validado por especialista certificado en ASL.
+HOW_ARE_YOU,ASL,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, realizada a partir de material de referencia externo. Recurso no validado por especialista certificado en ASL."
+HOW_DO_YOU_FEEL,ASL,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, realizada a partir de material de referencia externo. Recurso no validado por especialista certificado en ASL."
+NICE_TO_MEET_YOU,ASL,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, realizada a partir de material de referencia externo. Recurso no validado por especialista certificado en ASL."
+SHE,ASL,local,Grabación propia,,Grabación propia para el prototipo Sign2Sign. HE y SHE comparten la misma realización visual deíctica de tercera persona. Recurso no validado por especialista certificado en ASL.
+SUBWAY,ASL,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, realizada a partir de material de referencia externo. Recurso no validado por especialista certificado en ASL."
+WHAT_IS_YOUR_NAME,ASL,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, realizada a partir de material de referencia externo. Recurso no validado por especialista certificado en ASL."
+YOU_ALL,ASL,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, realizada a partir de material de referencia externo. Recurso no validado por especialista certificado en ASL."
+AFRAID,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+ANGRY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+BAD,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+BOY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+BROTHER,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+CAN,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+END,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+EXCUSE_ME,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+EXIST,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+FATHER,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+FINE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+FINISH,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+FIRST_PERSON_SINGULAR,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+FOOD,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+FRIEND,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+GIRL,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+GOODBYE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HAPPY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HAVE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HELLO,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HELP,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HOSPITAL,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HOW,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HOW_ARE_YOU,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HOW_DO_YOU_FEEL,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HOW_MANY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+HUNGRY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+KNOW_INFORMATION,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+KNOW_PERSON,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+LATER,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+LIKE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+MAN,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+MEET,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+MOTHER,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+NAME,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+NICE_TO_MEET_YOU,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+NOT,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+NOW,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+PLEASE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SAD,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SCHOOL,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SECOND_PERSON,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SHE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SICK,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SISTER,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SORRY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+STREET,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+STUDENT,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+SUBWAY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+THANK_YOU,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+THEY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+TIRED,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+TODAY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+TOMORROW,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+UNDERSTAND,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WANT,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WATER,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WHAT,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WHAT_IS_YOUR_NAME,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WHEN,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WHERE,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WHO,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WHY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WOMAN,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WORK,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+WORRIED,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+YESTERDAY,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+YOU_ALL,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."
+YOU_ARE_WELCOME,LSM,local,Grabación propia,,"Grabación propia para el prototipo Sign2Sign, basada en material de referencia de LSM. Recurso no validado por especialista certificado en LSM."

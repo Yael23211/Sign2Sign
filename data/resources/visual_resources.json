@@ -7,6 +7,1134 @@
       "location": "resources/asl/HELLO.mp4",
       "type": "video",
       "available": true
+    },
+    {
+      "concept_id": "GOODBYE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/GOODBYE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "THANK_YOU",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/THANK_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YOU_ARE_WELCOME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/YOU_ARE_WELCOME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "PLEASE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/PLEASE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SORRY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SORRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "EXCUSE_ME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/EXCUSE_ME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FIRST_PERSON_SINGULAR",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FIRST_PERSON_SINGULAR.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SECOND_PERSON",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SECOND_PERSON.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "THEY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/THEY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NAME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NAME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MAN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/MAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WOMAN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WOMAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MOTHER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/MOTHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FATHER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FATHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BROTHER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/BROTHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SISTER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SISTER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BOY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/BOY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "GIRL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/GIRL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FRIEND",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FRIEND.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "STUDENT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/STUDENT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHAT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHAT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHERE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHERE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHEN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHEN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHO",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHO.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_MANY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOW_MANY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FINE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FINE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BAD",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/BAD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HAPPY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HAPPY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SAD",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SAD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "ANGRY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/ANGRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WORRIED",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WORRIED.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TIRED",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/TIRED.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SICK",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SICK.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WATER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WATER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "AFRAID",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/AFRAID.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WANT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WANT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NOT",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NOT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "CAN",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/CAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "KNOW_INFORMATION",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/KNOW_INFORMATION.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "KNOW_PERSON",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/KNOW_PERSON.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "UNDERSTAND",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/UNDERSTAND.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HAVE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HAVE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "EXIST",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/EXIST.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "LIKE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/LIKE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MEET",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/MEET.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HELP",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HELP.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TODAY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/TODAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YESTERDAY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/YESTERDAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NOW",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NOW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "LATER",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/LATER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FINISH",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FINISH.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "END",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/END.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SCHOOL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SCHOOL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOSPITAL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOSPITAL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WORK",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WORK.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FOOD",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/FOOD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HUNGRY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HUNGRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "STREET",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/STREET.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TOMORROW",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/TOMORROW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_ARE_YOU",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOW_ARE_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_DO_YOU_FEEL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/HOW_DO_YOU_FEEL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NICE_TO_MEET_YOU",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/NICE_TO_MEET_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SHE",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SHE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SUBWAY",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/SUBWAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHAT_IS_YOUR_NAME",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/WHAT_IS_YOUR_NAME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YOU_ALL",
+      "language": "ASL",
+      "delivery": "local",
+      "location": "resources/asl/YOU_ALL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "AFRAID",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/AFRAID.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "ANGRY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/ANGRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BAD",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/BAD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BOY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/BOY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "BROTHER",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/BROTHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "CAN",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/CAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "END",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/END.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "EXCUSE_ME",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/EXCUSE_ME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "EXIST",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/EXIST.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FATHER",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/FATHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FINE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/FINE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FINISH",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/FINISH.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FIRST_PERSON_SINGULAR",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/FIRST_PERSON_SINGULAR.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FOOD",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/FOOD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "FRIEND",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/FRIEND.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "GIRL",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/GIRL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "GOODBYE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/GOODBYE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HAPPY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HAPPY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HAVE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HAVE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HELLO",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HELLO.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HELP",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HELP.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOSPITAL",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HOSPITAL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HOW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_ARE_YOU",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HOW_ARE_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_DO_YOU_FEEL",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HOW_DO_YOU_FEEL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HOW_MANY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HOW_MANY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "HUNGRY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/HUNGRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "KNOW_INFORMATION",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/KNOW_INFORMATION.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "KNOW_PERSON",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/KNOW_PERSON.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "LATER",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/LATER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "LIKE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/LIKE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MAN",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/MAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MEET",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/MEET.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "MOTHER",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/MOTHER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NAME",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/NAME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NICE_TO_MEET_YOU",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/NICE_TO_MEET_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NOT",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/NOT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "NOW",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/NOW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "PLEASE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/PLEASE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SAD",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SAD.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SCHOOL",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SCHOOL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SECOND_PERSON",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SECOND_PERSON.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SHE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SHE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SICK",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SICK.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SISTER",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SISTER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SORRY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SORRY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "STREET",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/STREET.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "STUDENT",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/STUDENT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "SUBWAY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/SUBWAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "THANK_YOU",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/THANK_YOU.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "THEY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/THEY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TIRED",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/TIRED.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TODAY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/TODAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "TOMORROW",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/TOMORROW.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "UNDERSTAND",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/UNDERSTAND.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WANT",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WANT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WATER",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WATER.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHAT",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WHAT.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHAT_IS_YOUR_NAME",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WHAT_IS_YOUR_NAME.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHEN",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WHEN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHERE",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WHERE.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHO",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WHO.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WHY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WHY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WOMAN",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WOMAN.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WORK",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WORK.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "WORRIED",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/WORRIED.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YESTERDAY",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/YESTERDAY.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YOU_ALL",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/YOU_ALL.mp4",
+      "type": "video",
+      "available": true
+    },
+    {
+      "concept_id": "YOU_ARE_WELCOME",
+      "language": "LSM",
+      "delivery": "local",
+      "location": "resources/lsm/YOU_ARE_WELCOME.mp4",
+      "type": "video",
+      "available": true
     }
   ]
 }
