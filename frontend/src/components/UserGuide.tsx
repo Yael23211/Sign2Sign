@@ -33,14 +33,7 @@ export function UserGuide({ onClose }: { onClose: () => void }) {
           <p className="guide-note"><kbd>P</kbd> → {t('repeat')}</p></>}
       </li>)}
     </ol>
-    <div className="guide-about">
-      <section aria-labelledby="guide-about-title"><h3 id="guide-about-title">{t('guideAbout')}</h3>
-        <p>{t('guideAboutText')}</p><p>{t('guideAboutProcess')}</p>
-        <p className="guide-note">{t('guideSpeech')}</p></section>
-      <section className="guide-scope" aria-labelledby="guide-scope-title"><h3 id="guide-scope-title">{t('guideScope')}</h3>
-        <ul>{(['guideScopeSpelling', 'guideScopeContinuous', 'guideScopeVocabulary', 'guideScopeGrammar'] as const)
-          .map(key => <li key={key}>{t(key)}</li>)}</ul></section>
-    </div>
+    <p className="guide-usage-note">{t('guideSpeech')}</p>
     <div className="guide-return"><button className="button primary" onClick={onClose}>{t('guideReturn')}</button></div>
   </section>;
 }

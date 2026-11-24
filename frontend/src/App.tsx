@@ -10,6 +10,8 @@ import { UiLanguageContext } from './i18n/UiLanguage';
 import { translateText, type TextKey, type UiLanguage } from './i18n/messages';
 import { ShortcutHelp } from './components/ShortcutHelp';
 import { UserGuide } from './components/UserGuide';
+import { AboutSection } from './components/AboutSection';
+import { ReferenceAlphabetButton } from './components/ReferenceAlphabetButton';
 
 export default function App() {
   const flow = useSign2SignSession();
@@ -40,6 +42,7 @@ export default function App() {
       <div className="header-tools">
         <button ref={guideButton} className="guide-access" aria-expanded={guideOpen} aria-controls="user-guide"
           onClick={() => guideOpen ? closeGuide() : setGuideOpen(true)}><span aria-hidden="true">?</span> {t('guideAccess')}</button>
+        <ReferenceAlphabetButton />
         <div className="ui-language" role="group" aria-label={t('uiLanguage')}>
         <span>{t('uiLanguage')}</span>
         <button lang="es" aria-pressed={locale === 'es'} onClick={() => setUiOverride('es')}>ES</button>
@@ -80,6 +83,7 @@ export default function App() {
         <TextBuilderPanel session={flow.session} recognition={flow.recognition} busy={flow.busy} translating={flow.phase === 'translating'}
           onCommand={command => void flow.command(command)} onTranslate={() => void flow.translate()} /></div>
       <TranslationResult result={flow.result} />
+      <AboutSection />
     </main>
     <footer><span>Sign2Sign <span aria-hidden="true">/</span> {t('footer')}</span><span>{t('scope')}</span></footer>
   </UiLanguageContext.Provider>;

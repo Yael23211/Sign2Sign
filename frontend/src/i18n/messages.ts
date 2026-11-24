@@ -1,6 +1,16 @@
 export type UiLanguage = 'es' | 'en';
 
 export const es = {
+  referenceAlphabet: 'Alfabeto de referencia', referenceSelectLanguage: 'Selecciona la lengua de señas:',
+  referenceClose: 'Cerrar alfabeto de referencia', referenceBack: 'Volver a la selección de lengua',
+  referenceNote: 'Las imágenes muestran referencias de captura correspondientes a las configuraciones utilizadas por los clasificadores de Sign2Sign.',
+  referenceProvisional: 'Referencia provisional', referenceProvisionalNote: 'Esta clase utiliza provisionalmente muestras procedentes del conjunto ASL.',
+  referenceStatic: 'Representación estática', referenceStaticNote: 'El prototipo utiliza una configuración estática para esta letra y no analiza su trayectoria de movimiento.',
+  referenceUnavailable: 'Referencia no disponible', referenceImageAlt: '{language}, letra {letter}: configuración de referencia',
+  referenceGrid: 'Alfabeto de referencia {language}',
+  focusMode: 'Modo enfoque', closeFocusMode: 'Cerrar modo enfoque', timeline: 'Secuencia de señas',
+  timelineCurrent: 'actual', timelineCompleted: 'completado', timelinePending: 'pendiente',
+  timelineItem: '{label}, elemento {position} de {total}, {state}',
   guideAccess: 'Cómo usar', guideTitle: 'Cómo usar Sign2Sign', guideClose: 'Cerrar guía', guideReturn: 'Volver a la traducción',
   guideIntro: 'De tu primera captura al resultado, en cinco pasos.',
   guideLanguageTitle: 'Selecciona tu lengua',
@@ -16,6 +26,7 @@ export const es = {
   guideTools: 'También puedes copiar, escuchar o imprimir el texto y repetir los videos.',
   guideSpeech: 'La opción Escuchar texto puede utilizarse como apoyo para comunicar el resultado a una persona oyente.',
   guideAbout: 'Acerca de Sign2Sign',
+  guideAcademic: 'Desarrollado en la Escuela Superior de Cómputo del Instituto Politécnico Nacional (ESCOM-IPN) con fines académicos como parte de un Trabajo Terminal.',
   guideAboutText: 'Sign2Sign es un prototipo académico orientado a la traducción automática entre American Sign Language (ASL) y Lengua de Señas Mexicana (LSM).',
   guideAboutProcess: 'El sistema reconoce configuraciones estáticas del alfabeto manual y construye una representación textual intermedia. Utiliza inteligencia artificial para apoyar la corrección y traducción del mensaje antes de generar una salida visual mediante videos.',
   guideScope: 'Alcance del prototipo',
@@ -87,6 +98,16 @@ export const es = {
 
 export type TextKey = keyof typeof es;
 export const en: Record<TextKey, string> = {
+  referenceAlphabet: 'Reference alphabet', referenceSelectLanguage: 'Select the sign language:',
+  referenceClose: 'Close reference alphabet', referenceBack: 'Back to language selection',
+  referenceNote: 'The images show capture references corresponding to the configurations used by the Sign2Sign classifiers.',
+  referenceProvisional: 'Provisional reference', referenceProvisionalNote: 'This class provisionally uses samples from the ASL dataset.',
+  referenceStatic: 'Static representation', referenceStaticNote: 'The prototype uses a static configuration for this letter and does not analyze its movement trajectory.',
+  referenceUnavailable: 'Reference unavailable', referenceImageAlt: '{language}, letter {letter}: reference hand configuration',
+  referenceGrid: '{language} reference alphabet',
+  focusMode: 'Focus mode', closeFocusMode: 'Close focus mode', timeline: 'Sign sequence',
+  timelineCurrent: 'current', timelineCompleted: 'completed', timelinePending: 'pending',
+  timelineItem: '{label}, item {position} of {total}, {state}',
   guideAccess: 'How to use', guideTitle: 'How to use Sign2Sign', guideClose: 'Close guide', guideReturn: 'Back to translation',
   guideIntro: 'From your first capture to the result, in five steps.',
   guideLanguageTitle: 'Select your language',
@@ -102,6 +123,7 @@ export const en: Record<TextKey, string> = {
   guideTools: 'You can also copy, listen to or print the text and repeat the videos.',
   guideSpeech: 'The Listen option can be used as additional support when communicating the result to a hearing person.',
   guideAbout: 'About Sign2Sign',
+  guideAcademic: 'Developed at the Escuela Superior de Cómputo, Instituto Politécnico Nacional (ESCOM-IPN), for academic purposes as part of a Trabajo Terminal project.',
   guideAboutText: 'Sign2Sign is an academic prototype focused on automatic translation between American Sign Language (ASL) and Mexican Sign Language (LSM).',
   guideAboutProcess: 'The system recognizes static configurations of the manual alphabet and builds an intermediate text representation. It uses artificial intelligence to support message correction and translation before generating visual output through videos.',
   guideScope: 'Prototype scope',

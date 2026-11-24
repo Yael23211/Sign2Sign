@@ -41,7 +41,7 @@ describe('translation presentation and tools', () => {
   it('keeps valid videos together with unresolved content', () => {
     render(<TranslationResult result={{ ...translation, unresolved: ['XYZ'] }} />);
     expect(screen.getByText(/XYZ/)).toBeInTheDocument();
-    expect(screen.getByLabelText('Video de HELLO')).toBeInTheDocument();
+    expect(screen.getByLabelText('Video de HOLA')).toBeInTheDocument();
   });
   it('keeps textual output when visual preparation fails', () => {
     render(<TranslationResult result={{ ...translation, resources: [], state: 'failed',

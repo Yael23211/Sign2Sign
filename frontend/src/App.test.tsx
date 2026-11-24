@@ -4,6 +4,7 @@ import { beforeEach, describe, it, expect, vi, type Mock } from 'vitest';
 import App from './App';
 import { recognition, response, session, translation } from './test/fixtures';
 import type { Session } from './types/api';
+import { StrictMode } from 'react';
 
 let current: Session;
 let fetcher: Mock<(url: string, init?: RequestInit) => Promise<Response>>;
@@ -40,12 +41,89 @@ async function renderSpanish() {
 }
 
 async function readyToCapture() {
-  await userEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+  await screen.findByRole('button', { name: 'Nueva sesión' });
   await userEvent.click(screen.getByRole('button', { name: 'Activar cámara' }));
   fireEvent.loadedData(screen.getByLabelText(/Vista previa/));
   await userEvent.click(screen.getByRole('button', { name: /Capturar seña/ }));
   await waitFor(() => expect(screen.getByLabelText('Texto en construcción')).toHaveValue('H'));
 }
+
+describe('initial ASL session regression', () => {
+  it.each(['button', 'Enter'])('enables initial ASL capture with %s without changing language or manually starting a session', async method => {
+    render(<StrictMode><App /></StrictMode>);
+    expect(screen.getByLabelText('Source sign language')).toHaveValue('ASL');
+    await screen.findByRole('button', { name: 'New session' });
+    expect(navigator.mediaDevices.getUserMedia).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: 'Capture sign' })).toBeDisabled();
+    await userEvent.click(screen.getByRole('button', { name: 'Turn camera on' }));
+    fireEvent.loadedData(screen.getByLabelText('Camera preview, visually mirrored'));
+    const capture = screen.getByRole('button', { name: 'Capture sign' });
+    expect(capture).toBeEnabled();
+    const creations = fetcher.mock.calls.filter(([url]) => url === '/api/v1/sessions');
+    expect(creations).toHaveLength(1);
+    expect(JSON.parse(creations[0][1]!.body as string)).toEqual({ source_language: 'ASL' });
+    if (method === 'Enter') shortcut('Enter'); else await userEvent.click(capture);
+    await waitFor(() => expect(screen.getByLabelText('Text in progress')).toHaveValue('H'));
+    expect(fetcher).toHaveBeenCalledWith('/api/v1/sessions/test-session/captures', expect.objectContaining({ method: 'POST' }));
+    expect(screen.getByLabelText('Source sign language')).toHaveValue('ASL');
+  });
+
+  it('keeps capture unavailable until initial session creation finishes', async () => {
+    const original = fetcher.getMockImplementation()!;
+    let finish!: (value: Response) => void;
+    fetcher.mockImplementation((url, init) => url === '/api/v1/sessions'
+      ? new Promise(resolve => { finish = resolve; }) : original(url, init));
+    render(<App />);
+    expect(screen.getByRole('button', { name: 'Capture sign' })).toBeDisabled();
+    shortcut('Enter');
+    expect(fetcher.mock.calls.filter(([url]) => url.endsWith('/captures'))).toHaveLength(0);
+    await act(async () => { finish(response(session, 201)); });
+    await userEvent.click(screen.getByRole('button', { name: 'Turn camera on' }));
+    fireEvent.loadedData(screen.getByLabelText('Camera preview, visually mirrored'));
+    expect(screen.getByRole('button', { name: 'Capture sign' })).toBeEnabled();
+  });
+
+  it('keeps capture disabled on initialization failure and retries through the existing start button', async () => {
+    const original = fetcher.getMockImplementation()!;
+    let failFirst = true;
+    fetcher.mockImplementation((url, init) => {
+      if (url === '/api/v1/sessions' && failFirst) {
+        failFirst = false;
+        return Promise.resolve(response({ error: { code: 'session_capacity' } }, 503));
+      }
+      return original(url, init);
+    });
+    render(<App />);
+    expect(await screen.findByRole('alert')).toHaveTextContent('session limit');
+    expect(screen.getByRole('button', { name: 'Capture sign' })).toBeDisabled();
+    expect(screen.getByLabelText('Source sign language')).toHaveValue('ASL');
+    await userEvent.click(screen.getByRole('button', { name: 'Start session' }));
+    await screen.findByRole('button', { name: 'New session' });
+    await userEvent.click(screen.getByRole('button', { name: 'Turn camera on' }));
+    fireEvent.loadedData(screen.getByLabelText('Camera preview, visually mirrored'));
+    expect(screen.getByRole('button', { name: 'Capture sign' })).toBeEnabled();
+    expect(fetcher.mock.calls.filter(([url]) => url === '/api/v1/sessions')).toHaveLength(2);
+  });
+
+  it('does not reinitialize on UI language changes or health checks, including after explicit close', async () => {
+    render(<App />);
+    await screen.findByRole('button', { name: 'New session' });
+    await userEvent.click(screen.getByRole('button', { name: 'ES' }));
+    await userEvent.click(screen.getByRole('button', { name: 'EN' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Use automatic interface language' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Backend connected' }));
+    await screen.findByRole('button', { name: 'Backend connected' });
+    expect(fetcher.mock.calls.filter(([url]) => url === '/api/v1/sessions')).toHaveLength(1);
+    await userEvent.click(screen.getByRole('button', { name: 'Close session' }));
+    await screen.findByRole('button', { name: 'Start session' });
+    await userEvent.click(screen.getByRole('button', { name: 'ES' }));
+    await userEvent.click(screen.getByRole('button', { name: 'EN' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Backend connected' }));
+    await screen.findByRole('button', { name: 'Backend connected' });
+    expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled();
+    expect(fetcher.mock.calls.filter(([url]) => url === '/api/v1/sessions')).toHaveLength(1);
+  });
+});
 
 describe('SC-01 session integration', () => {
   it('renders the initial interface with accessible controls and backend health', async () => {
@@ -57,7 +135,7 @@ describe('SC-01 session integration', () => {
   });
   it('deletes the previous session before switching language and cleans up on unmount', async () => {
     const { unmount } = await renderSpanish();
-    await userEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    await screen.findByRole('button', { name: 'Nueva sesión' });
     await userEvent.selectOptions(screen.getByLabelText('Lengua de origen'), 'LSM');
     await waitFor(() => expect(screen.getByLabelText('Lengua de origen')).toHaveValue('LSM'));
     const calls = fetcher.mock.calls;
@@ -84,7 +162,7 @@ describe('SC-01 session integration', () => {
   it('renders translation, refreshes once and repeats videos without retranslating', async () => {
     await renderSpanish(); await readyToCapture();
     await userEvent.click(screen.getByRole('button', { name: 'Traducir mensaje' }));
-    expect(await screen.findByText('HOLA')).toBeInTheDocument();
+    expect(await screen.findByText('HOLA', { selector: '.result-text' })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Repetir secuencia' }));
     expect(fetcher.mock.calls.filter(([url]) => url.endsWith('/translations'))).toHaveLength(1);
     expect(fetcher.mock.calls.filter(([url, init]) => url.endsWith('/test-session') && !init)).toHaveLength(1);
@@ -124,7 +202,7 @@ describe('SC-01 session integration', () => {
     fetcher.mockRejectedValue(new Error('private stack'));
     await renderSpanish();
     expect(await screen.findByRole('button', { name: 'Backend sin conexión' })).toBeInTheDocument();
-    expect(screen.getByRole('alert')).toHaveTextContent('Inicia FastAPI');
+    expect(screen.getByText(/El backend no está disponible/)).toHaveTextContent('Inicia FastAPI');
   });
   it.each([[404, 'session_not_found', 'ya no existe'], [409, 'session_busy', 'ocupada']])(
     'handles session failure %s without inventing a new session', async (status, code, message) => {
@@ -140,7 +218,7 @@ describe('SC-01 session integration', () => {
     });
   it('closes the session explicitly and attempts cleanup on pagehide', async () => {
     await renderSpanish();
-    await userEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    await screen.findByRole('button', { name: 'Nueva sesión' });
     fireEvent(window, new Event('pagehide'));
     expect(fetcher).toHaveBeenLastCalledWith('/api/v1/sessions/test-session', { method: 'DELETE', keepalive: true });
     await userEvent.click(screen.getByRole('button', { name: 'Cerrar sesión' }));
@@ -169,6 +247,7 @@ describe('incremental UX V2', () => {
     render(<App />);
     expect(screen.getByLabelText('Source sign language')).toHaveValue('ASL');
     expect(document.documentElement.lang).toBe('en');
+    await screen.findByRole('button', { name: 'New session' });
     await userEvent.selectOptions(screen.getByLabelText('Source sign language'), 'LSM');
     expect(await screen.findByLabelText('Lengua de origen')).toHaveValue('LSM');
     expect(document.documentElement.lang).toBe('es');
@@ -179,7 +258,7 @@ describe('incremental UX V2', () => {
 
   it('keeps manual UI override across sessions without changing source or sending requests', async () => {
     render(<App />);
-    await userEvent.click(screen.getByRole('button', { name: 'Start session' }));
+    await screen.findByRole('button', { name: 'New session' });
     const before = fetcher.mock.calls.length;
     await userEvent.click(screen.getByRole('button', { name: 'ES' }));
     expect(screen.getByLabelText('Lengua de origen')).toHaveValue('ASL');
@@ -197,7 +276,7 @@ describe('incremental UX V2', () => {
 
   it('captures with Enter only while the camera is active', async () => {
     await renderSpanish();
-    await userEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    await screen.findByRole('button', { name: 'Nueva sesión' });
     shortcut('Enter'); expect(fetcher.mock.calls.some(([url]) => url.endsWith('/captures'))).toBe(false);
     await userEvent.click(screen.getByRole('button', { name: 'Activar cámara' }));
     fireEvent.loadedData(screen.getByLabelText(/Vista previa/));
@@ -231,7 +310,7 @@ describe('incremental UX V2', () => {
     await act(async () => finish(response(translation)));
     expect(scroll).toHaveBeenCalledOnce();
     expect(scroll).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
-    fireEvent.ended(screen.getByLabelText('Video de HELLO'));
+    fireEvent.ended(screen.getByLabelText('Video de HOLA'));
     expect(screen.getByText('2 / 3')).toBeInTheDocument();
     shortcut('p'); expect(screen.getByText('1 / 3')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'EN' }));
@@ -271,29 +350,64 @@ describe('user orientation panel', () => {
     render(<App />);
     await screen.findByRole('button', { name: 'Backend connected' });
     const requests = fetcher.mock.calls.length;
+    const academicEnglish = 'Developed at the Escuela Superior de Cómputo, Instituto Politécnico Nacional (ESCOM-IPN), for academic purposes as part of a Trabajo Terminal project.';
+    const about = screen.getByRole('region', { name: 'About Sign2Sign' });
+    expect(within(about).getByRole('heading', { name: 'Prototype scope' })).toBeVisible();
+    expect(within(about).getByText(academicEnglish)).toBeVisible();
+    expect(screen.getByRole('main').lastElementChild).toBe(about);
     await userEvent.click(screen.getByRole('button', { name: 'How to use' }));
     const guide = screen.getByRole('region', { name: 'How to use Sign2Sign' });
+    expect(within(guide).queryByRole('heading', { name: 'About Sign2Sign' })).not.toBeInTheDocument();
+    expect(within(guide).queryByRole('heading', { name: 'Prototype scope' })).not.toBeInTheDocument();
+    expect(within(guide).queryByText(academicEnglish)).not.toBeInTheDocument();
     expect(within(guide).queryByText('Select Start session to begin.')).not.toBeInTheDocument();
     expect(within(guide).getByRole('heading', { name: 'How to use Sign2Sign' })).toHaveFocus();
-    for (const title of ['Select your language', 'Turn on the camera', 'Build your message', 'Translate', 'View the result', 'About Sign2Sign', 'Prototype scope']) {
+    for (const title of ['Select your language', 'Turn on the camera', 'Build your message', 'Translate', 'View the result']) {
       expect(within(guide).getByRole('heading', { name: title })).toBeInTheDocument();
     }
-    expect(within(guide).getByText('Does not perform continuous sign language recognition.')).toBeInTheDocument();
+    expect(within(about).getByText('Does not perform continuous sign language recognition.')).toBeInTheDocument();
     expect(within(guide).getByText(/hearing person/)).toBeInTheDocument();
+    const academic = within(about).getByText(academicEnglish);
+    expect(academic).toBeVisible();
+    expect(within(about).getByRole('heading', { name: 'Prototype scope' }).compareDocumentPosition(academic)
+      & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(within(guide).getByText('Enter')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'ES' }));
     const spanishGuide = screen.getByRole('region', { name: 'Cómo usar Sign2Sign' });
+    expect(spanishGuide).toBe(guide);
+    const spanishAbout = screen.getByRole('region', { name: 'Acerca de Sign2Sign' });
+    expect(spanishAbout).toBe(about);
+    const academicSpanish = 'Desarrollado en la Escuela Superior de Cómputo del Instituto Politécnico Nacional (ESCOM-IPN) con fines académicos como parte de un Trabajo Terminal.';
+    expect(within(spanishAbout).getByText(academicSpanish)).toBeVisible();
+    expect(within(spanishGuide).queryByRole('heading', { name: 'Acerca de Sign2Sign' })).not.toBeInTheDocument();
+    expect(within(spanishGuide).queryByRole('heading', { name: 'Alcance del prototipo' })).not.toBeInTheDocument();
+    expect(within(spanishGuide).queryByText(academicSpanish)).not.toBeInTheDocument();
+    expect(within(spanishGuide).queryByText(academicEnglish)).not.toBeInTheDocument();
     expect(within(spanishGuide).queryByText('Selecciona Iniciar sesión para comenzar.')).not.toBeInTheDocument();
-    for (const title of ['Selecciona tu lengua', 'Activa la cámara', 'Construye tu mensaje', 'Traduce', 'Consulta el resultado', 'Acerca de Sign2Sign', 'Alcance del prototipo']) {
+    for (const title of ['Selecciona tu lengua', 'Activa la cámara', 'Construye tu mensaje', 'Traduce', 'Consulta el resultado']) {
       expect(within(spanishGuide).getByRole('heading', { name: title })).toBeInTheDocument();
     }
-    expect(within(spanishGuide).getByText('No realiza reconocimiento continuo de lengua de señas.')).toBeInTheDocument();
+    expect(within(spanishAbout).getByText('No realiza reconocimiento continuo de lengua de señas.')).toBeInTheDocument();
     expect(within(spanishGuide).getByText(/persona oyente/)).toBeInTheDocument();
     expect(fetcher).toHaveBeenCalledTimes(requests);
     await userEvent.click(screen.getByRole('button', { name: 'Volver a la traducción' }));
     expect(screen.queryByRole('region', { name: 'Cómo usar Sign2Sign' })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Cómo usar' })).toHaveFocus();
+    expect(spanishAbout).toBeVisible();
     expect(fetcher).toHaveBeenCalledTimes(requests);
+  });
+  it('keeps one informational section after the result, videos and translation details', async () => {
+    await renderSpanish(); await readyToCapture();
+    await userEvent.click(screen.getByRole('button', { name: 'Traducir mensaje' }));
+    await screen.findByText('Traducción terminada.');
+    const about = screen.getByRole('region', { name: 'Acerca de Sign2Sign' });
+    for (const preceding of [screen.getByLabelText('Video de HOLA'), screen.getByText('Detalles de la traducción')]) {
+      expect(preceding.compareDocumentPosition(about) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    }
+    expect(screen.getAllByRole('heading', { name: 'Acerca de Sign2Sign' })).toHaveLength(1);
+    expect(screen.getAllByRole('heading', { name: 'Alcance del prototipo' })).toHaveLength(1);
+    expect(within(about).getAllByRole('listitem')).toHaveLength(4);
+    expect(screen.getByRole('main').lastElementChild).toBe(about);
   });
   it('opens and closes in Spanish without touching the active session, camera or message', async () => {
     await renderSpanish(); await readyToCapture();
@@ -323,12 +437,12 @@ describe('user orientation panel', () => {
     await renderSpanish(); await readyToCapture();
     await userEvent.click(screen.getByRole('button', { name: 'Traducir mensaje' }));
     await screen.findByText('Traducción terminada.');
-    const video = screen.getByLabelText('Video de HELLO');
+    const video = screen.getByLabelText('Video de HOLA');
     const requests = fetcher.mock.calls.length;
     await userEvent.click(screen.getByRole('button', { name: 'Cómo usar' }));
     await userEvent.click(screen.getByRole('button', { name: 'Cómo usar' }));
     expect(screen.queryByRole('region', { name: 'Cómo usar Sign2Sign' })).not.toBeInTheDocument();
-    expect(screen.getByLabelText('Video de HELLO')).toBe(video);
+    expect(screen.getByLabelText('Video de HOLA')).toBe(video);
     expect(fetcher).toHaveBeenCalledTimes(requests);
   });
 });
@@ -355,7 +469,9 @@ describe('small visual refinements', () => {
 
   it('preserves checking state and manual health recheck without a visible refresh icon', async () => {
     let finish!: (value: Response) => void;
-    fetcher.mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+    const original = fetcher.getMockImplementation()!;
+    fetcher.mockImplementation((url, init) => url.endsWith('/health')
+      ? new Promise(resolve => { finish = resolve; }) : original(url, init));
     render(<App />);
     const checking = screen.getByRole('button', { name: 'Checking connection…' });
     expect(checking).toBeDisabled();
@@ -364,7 +480,7 @@ describe('small visual refinements', () => {
     await act(async () => finish(response({ status: 'ok', storage: 'memory', workers: 1 })));
     await userEvent.click(screen.getByRole('button', { name: 'Backend connected' }));
     expect(screen.getByRole('button', { name: 'Checking connection…' })).toBeDisabled();
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher.mock.calls.filter(([url]) => url.endsWith('/health'))).toHaveLength(2);
     await act(async () => finish(response({ status: 'offline' })));
     expect(screen.getByRole('button', { name: 'Backend offline' })).toBeEnabled();
   });

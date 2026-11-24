@@ -16,10 +16,16 @@ export function useSign2SignSession() {
   const active = useRef<Session | null>(null);
   const locked = useRef(false);
   const mounted = useRef(true);
+  const initialized = useRef(false);
   const update = (next: Session | null) => { active.current = next; if (mounted.current) setSession(next); };
 
   useEffect(() => {
     mounted.current = true;
+    // Initialize once, including StrictMode replay; closing remains explicit.
+    if (!initialized.current) {
+      initialized.current = true;
+      void start(language);
+    }
     const release = () => {
       const id = active.current?.id;
       if (id) void api.delete(id, true).catch(() => {});
