@@ -1,217 +1,475 @@
-Activar el entorno virtual 
-    .venv\Scripts\activate
+# Sign2Sign
 
-Probar SC-03
-    python scripts\run_sc03_webcam.py --language LSM
+**Sign2Sign** es un prototipo académico de traducción bidireccional entre **American Sign Language (ASL)** y **Lengua de Señas Mexicana (LSM)** desarrollado mediante técnicas de visión por computadora, aprendizaje automático y modelos de lenguaje.
 
-Probar SC-03 y SC-04
-    python scripts\run_sc03_sc04_webcam.py --language LSM
+El sistema reconoce señas estáticas correspondientes al alfabeto manual mediante una webcam, construye una representación textual intermedia, corrige posibles errores de reconocimiento, realiza la traducción entre inglés y español y genera una salida visual mediante recursos de la lengua de señas destino.
 
-Probar nucleo SC-03 + SC-04 + SC-05 + SC-06 + SC-07
-    python scripts\run_sc03_sc04_sc05_sc06_webcam.py --language LSM
-## SC-02: backend FastAPI local
+El prototipo permite realizar los siguientes flujos:
 
-Desde la raiz del proyecto, con Python 3.12 y el entorno activado:
+- **ASL → LSM**
+- **LSM → ASL**
 
-```powershell
-python -m pip install -r requirements.txt
-python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000 --workers 1
+---
+
+## Funcionamiento general
+
+El flujo de Sign2Sign se divide en las siguientes etapas:
+
+```text
+Webcam
+   ↓
+Reconocimiento de la seña
+   ↓
+Construcción del texto
+   ↓
+Corrección y traducción mediante LLM
+   ↓
+Obtención de conceptos canónicos
+   ↓
+Mapeo de recursos visuales
+   ↓
+Reproducción de la traducción
 ```
 
-Configura `GEMINI_API_KEY` en `.env` usando `.env.example` como referencia.
-`GEMINI_MODEL` permite elegir otro modelo compatible con SC-04. Los modelos
-ASL/LSM y sus escaladores deben existir en las rutas usadas por los scripts
-actuales; no se descargan al iniciar. El ciclo de vida carga los componentes
-una vez y falla al arrancar si falta una dependencia necesaria.
+### 1. Captura
 
-Documentacion HTTP: http://127.0.0.1:8000/docs
+El usuario selecciona la lengua de señas de origen y activa la webcam desde la interfaz web.
 
-| Metodo | Ruta bajo `/api/v1` | Uso |
-|---|---|---|
-| GET | `/health` | Disponibilidad local; no llama al proveedor LLM |
-| POST | `/sessions` | JSON `{"source_language":"LSM"}` o `ASL` |
-| GET | `/sessions/{id}` | Texto, estado y ultimo resultado |
-| POST | `/sessions/{id}/captures` | Imagen binaria JPEG/PNG en el cuerpo HTTP |
-| POST | `/sessions/{id}/commands` | JSON `{"command":"space"}`, `backspace` o `clear` |
-| POST | `/sessions/{id}/translations` | Espera y devuelve el resultado final |
-| DELETE | `/sessions/{id}` | Elimina el contenido temporal |
-| GET | `/resources/{language}/{concept_id}` | Video MP4 registrado, con soporte Range |
+Cada captura corresponde deliberadamente a una letra del alfabeto manual.
 
-La captura usa `Content-Type: image/jpeg` o `image/png`, sin multipart.
-Por ejemplo, desde un futuro cliente: `fetch(url, {method: 'POST',
-headers: {'Content-Type': blob.type}, body: blob})`. El servidor valida
-firma, decodificacion y dimensiones: maximo 5 MiB y 4096 x 4096 pixeles
-como area maxima. Decodifica a BGR, ignora orientacion EXIF y no refleja ni
-rota la imagen. Un espejo CSS de la vista previa no debe alterar los pixeles
-enviados. Cada peticion representa una captura deliberada.
+### 2. Reconocimiento de señas
 
-Cada sesion mantiene su propio TextBuilder. Los estados son `capturing`,
-`processing`, `ready`, `failed` y `closed` (este ultimo solo durante el borrado).
-La captura o edicion invalida el resultado anterior. Hay un maximo de 100
-sesiones y 500 letras por cadena. No hay persistencia ni expiracion automatica:
-se libera memoria con DELETE o al cerrar el proceso. Un reinicio pierde las
-sesiones. Ejecutar exclusivamente con un worker.
+La imagen capturada se procesa mediante **MediaPipe Hand Landmarker**, que obtiene 21 landmarks de la mano.
 
-Las rutas sincronas de FastAPI se ejecutan en su threadpool. La captura recibe
-el cuerpo con un limite y delega decodificacion e inferencia al threadpool.
-Un bloqueo por sesion rechaza solicitudes simultaneas con 409, incluida su
-consulta o borrado mientras esta ocupada. Un bloqueo global serializa SC-03;
-otro serializa el flujo SC-04 a SC-06, sin bloquear el event loop.
+Cada landmark contiene coordenadas `x`, `y` y `z`, formando un vector de **63 características**.
 
-La traduccion devuelve 200 y campos `state`, `error`, `resources` y
-`latency_seconds`, junto al contrato textual de SC-04. Cada recurso incluye
-una URL relativa HTTP bajo `/api/v1/resources/`, posicion y total. Un error
-visual devuelve 200 con `state: failed`, la etapa fallida y el resultado
-textual preservado. Si solo hay unresolved, no se crea un plan vacio.
-Un fallo SC-04 devuelve 502 con etapa SC-04 y conserva la entrada para
-reintento. No se publican mensajes internos de excepciones, rutas fisicas ni
-la respuesta cruda de Gemini. No se abre ninguna ventana OpenCV.
+Sign2Sign utiliza dos clasificadores independientes:
 
-El controlador es sincrono e independiente de las rutas: una futura capa de
-trabajos podra invocarlo sin cambiar los contratos de SC-03 a SC-06.
-Las sesiones temporales pertenecen a SC-07 en
-`src/resources/temporary_session_store.py`.
+- **ASL:** MLP con características `img_norm`.
+- **LSM:** MLP con características `world_norm`.
 
-No hay CORS habilitado: el futuro Vite puede usar un proxy `/api` al backend.
-Antes de usar origenes distintos habra que configurar CORS para ese origen.
-Este servicio local no incluye autenticacion. Debe permanecer en loopback.
-La compatibilidad de los codecs MP4 con el navegador requiere validacion al
-integrar SC-01; OpenCV y un navegador pueden soportar codecs diferentes.
+Además de la predicción principal, el sistema conserva las tres alternativas con mayor probabilidad (**Top-3**).
 
-Pruebas automaticas, sin camara ni llamadas reales a Gemini:
+### 3. Construcción textual
 
-```powershell
-python -m unittest discover -s tests -v
+Las letras reconocidas se incorporan progresivamente a una cadena.
+
+El usuario puede:
+
+- capturar una letra;
+- insertar espacios;
+- borrar el último elemento;
+- limpiar el texto;
+- enviar el mensaje para su traducción.
+
+### 4. Corrección y traducción
+
+El texto reconocido es enviado al módulo de procesamiento lingüístico.
+
+Este módulo utiliza **Google Gemini API** para:
+
+1. corregir posibles errores producidos durante el reconocimiento;
+2. traducir entre los idiomas puente inglés y español;
+3. obtener una representación semántica mediante conceptos controlados.
+
+El procesamiento utiliza tanto el texto construido como las alternativas Top-3 generadas durante el reconocimiento.
+
+### 5. Vocabulario canónico
+
+Sign2Sign utiliza un vocabulario cerrado de **71 conceptos canónicos**:
+
+- 65 conceptos atómicos;
+- 6 expresiones.
+
+El modelo de lenguaje únicamente puede producir identificadores pertenecientes a este vocabulario para las siguientes etapas del sistema.
+
+Los elementos que no pueden ser representados se registran como `unresolved`.
+
+### 6. Salida visual
+
+Los conceptos obtenidos son asociados con recursos visuales previamente registrados.
+
+El repositorio contiene:
+
+- **71 recursos ASL**
+- **71 recursos LSM**
+- **142 videos en total**
+
+Los videos correspondientes son enviados a la interfaz y reproducidos consecutivamente respetando el orden de los conceptos generados.
+
+---
+
+# Arquitectura
+
+El proyecto está dividido en siete subsistemas:
+
+| Subsistema | Función |
+|---|---|
+| **SC-01** | Interfaz web |
+| **SC-02** | Control del flujo de traducción |
+| **SC-03** | Reconocimiento de señas y construcción textual |
+| **SC-04** | Corrección y traducción mediante LLM |
+| **SC-05** | Mapeo de conceptos a recursos visuales |
+| **SC-06** | Preparación de la secuencia visual |
+| **SC-07** | Gestión de recursos y datos temporales |
+
+La interfaz únicamente se comunica con **SC-02**, implementado mediante FastAPI. Este subsistema coordina el resto del flujo de procesamiento.
+
+```text
+Usuario
+   ↕
+SC-01
+Interfaz React
+   ↕
+SC-02
+FastAPI
+   ↓
+SC-03
+Reconocimiento
+   ↓
+SC-04
+Corrección y traducción
+   ↓
+SC-05
+Mapeo de recursos
+   ↓
+SC-06
+Salida visual
 ```
 
-Los scripts interactivos existentes siguen disponibles para validar el nucleo
-local. FastAPI no los importa ni ejecuta. En el entorno actual Starlette emite
-una advertencia de deprecacion de su adaptador TestClient para httpx; las
-pruebas funcionan con las versiones declaradas.
+SC-07 participa como soporte para la administración temporal de las sesiones y los recursos utilizados por el sistema.
 
-## SC-01: interfaz React + TypeScript + Vite
+---
 
-El frontend está en `frontend/`. Requiere Node.js 20.18 o posterior y npm.
-Se usa Vite 6 para mantener compatibilidad con el Node instalado en este
-proyecto. Las versiones exactas de dependencias están en `package-lock.json`.
+# Tecnologías principales
 
-Inicia primero FastAPI desde la raíz, con su configuración y artefactos locales:
+### Backend
+
+- Python 3.12
+- FastAPI
+- TensorFlow / Keras
+- MediaPipe
+- OpenCV
+- scikit-learn
+- Google Gemini API
+
+### Frontend
+
+- React
+- TypeScript
+- Vite
+
+---
+
+# Requisitos
+
+Para ejecutar Sign2Sign se requiere:
+
+- **Python 3.12**
+- **Node.js 20.18 o posterior**
+- npm
+- Webcam
+- Navegador web moderno
+- Conexión a Internet
+- Clave válida de Google Gemini API
+
+---
+
+# Archivos de los modelos
+
+Antes de ejecutar el sistema deben encontrarse los siguientes archivos:
+
+```text
+models/
+│
+├── mediapipe/
+│   └── hand_landmarker.task
+│
+├── asl/
+│   ├── A3_mlp_img_norm.keras
+│   └── scaler_img_norm.joblib
+│
+└── lsm/
+    ├── V2_M2_mlp_world_norm.keras
+    └── scaler_world_norm.joblib
+```
+
+Estos archivos contienen los clasificadores y escaladores utilizados durante el reconocimiento.
+
+---
+
+# Configuración inicial
+
+## 1. Obtener el proyecto
+
+Si se utiliza Git:
+
+```bash
+git clone https://github.com/Yael23211/Sign2Sign.git
+cd Sign2Sign
+```
+
+También es posible utilizar directamente la carpeta entregada con el proyecto.
+
+---
+
+## 2. Crear el entorno virtual
+
+Desde la raíz de Sign2Sign:
+
+```bash
+python -m venv .venv
+```
+
+En Windows:
 
 ```powershell
 .venv\Scripts\activate
+```
+
+En Linux o macOS:
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+## 3. Instalar las dependencias del backend
+
+Con el entorno virtual activado:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+---
+
+## 4. Configurar Gemini API
+
+El proyecto incluye el archivo:
+
+```text
+.env.example
+```
+
+Crear una copia llamada:
+
+```text
+.env
+```
+
+En Windows puede utilizarse:
+
+```powershell
+copy .env.example .env
+```
+
+Dentro de `.env`, configurar:
+
+```text
+GEMINI_API_KEY=TU_CLAVE_API
+```
+
+También puede especificarse el modelo de Gemini:
+
+```text
+GEMINI_MODEL=gemini-3.5-flash-lite
+```
+
+**No se debe compartir ni subir al repositorio una clave API real.**
+
+---
+
+# Ejecución de Sign2Sign
+
+Sign2Sign requiere ejecutar el backend y el frontend simultáneamente.
+
+## 1. Iniciar el backend
+
+Desde la carpeta raíz del proyecto y con el entorno virtual activado:
+
+```bash
 python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-En otra terminal:
+El backend estará disponible en:
 
-```powershell
+```text
+http://127.0.0.1:8000
+```
+
+La documentación interactiva de la API puede consultarse en:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 2. Iniciar el frontend
+
+Abrir una **segunda terminal**.
+
+Desde la raíz del proyecto:
+
+```bash
 cd frontend
 npm ci
 npm run dev
 ```
 
-Abre `http://127.0.0.1:5173`. Vite redirige `/api` a
-`http://127.0.0.1:8000`, incluyendo videos y solicitudes Range. No requiere
-CORS ni cambios en FastAPI. La vista previa de `npm run preview` también tiene
-el proxy local; el directorio `dist` por sí solo necesita un servidor que
-redirija `/api` al backend. No se implementó despliegue en esta fase.
+La interfaz estará disponible en:
 
-La interfaz permite iniciar, cambiar y cerrar sesiones, capturar una imagen
-deliberadamente, editar el texto devuelto por el backend, traducir y reproducir
-la secuencia recibida. También ofrece copia, lectura en voz alta e impresión.
-No se guardan sesiones en localStorage ni se ejecutan modelos en el navegador.
-La vista previa se refleja solo mediante CSS; el canvas no invierte los
-píxeles. La captura JPEG se limita a un encuadre de hasta 1280 × 720.
-
-Las traducciones esperan una respuesta final, sin polling ni trabajos. Tras
-completarlas se consulta una vez la sesión para actualizar el estado del
-backend. No se reenvían capturas ni traducciones automáticamente ante errores.
-La repetición de videos usa exclusivamente la secuencia ya recibida.
-
-La cámara requiere localhost o un contexto seguro y permiso del usuario.
-Los clips de señas se reproducen sin audio para permitir inicio automático;
-si el navegador lo bloquea, utiliza Reproducir. La voz utiliza Web Speech API,
-con `en-US` para inglés y `es-MX` para español; su disponibilidad depende de
-las voces del sistema/navegador. Copiar requiere permiso de portapapeles.
-
-Cerrar sesión elimina explícitamente su estado en FastAPI. Al desmontar o
-salir de la página se intenta un DELETE con `keepalive`; esa limpieza no está
-garantizada si la red falla o el backend mantiene la sesión ocupada. El backend
-no tiene expiración automática, por lo que conviene cerrar la sesión desde
-la interfaz antes de abandonar la página. Las sesiones se pierden al reiniciar
-FastAPI. No uses varios workers para esta versión.
-
-Pruebas automáticas y compilación:
-
-```powershell
-cd frontend
-npm test
-npm run build
-npm audit
+```text
+http://127.0.0.1:5173
 ```
 
-Vitest y Testing Library simulan FastAPI, cámara y APIs multimedia. Las
-pruebas no llaman a Gemini ni usan una cámara real. No se creó todavía el
-documento de cierre de fase SC-01: depende de la validación manual siguiente.
+Abrir esta dirección en el navegador.
 
-### Validación manual pendiente de SC-01
+---
 
-La segunda iteración de UX conserva la cámara y el flujo existentes. El idioma
-de interfaz es inglés para origen ASL y español para origen LSM. El selector
-ES / EN permite sobrescribir esa elección sin cambiar la lengua de señas ni
-crear otra sesión; Automático restaura el comportamiento por lengua de origen.
-La elección manual se conserva durante el uso de la página y se restablece
-al recargar. El idioma hablado por TTS depende del texto, no de la interfaz.
+# Uso del sistema
 
-Además de los botones, están disponibles estos atajos:
+Una vez iniciado Sign2Sign:
+
+1. Seleccionar la lengua de señas de origen.
+2. Iniciar una sesión.
+3. Activar la webcam.
+4. Permitir el acceso a la cámara desde el navegador.
+5. Realizar una seña del alfabeto manual frente a la cámara.
+6. Capturar la seña.
+7. Repetir el proceso para formar palabras o frases.
+8. Utilizar espacios para separar palabras.
+9. Revisar el texto reconocido.
+10. Seleccionar **Traducir**.
+11. Esperar el procesamiento del texto.
+12. Consultar:
+   - texto reconocido;
+   - texto corregido;
+   - traducción;
+   - secuencia visual en la lengua destino.
+13. Los videos correspondientes se reproducirán desde la propia interfaz.
+
+---
+
+# Atajos de teclado
+
+La interfaz incluye los siguientes atajos:
 
 | Tecla | Acción |
 |---|---|
-| Enter | Capturar seña, solo con sesión y cámara activa |
-| Space | Agregar espacio |
-| Backspace | Borrar último elemento |
-| Escape | Limpiar |
-| T | Traducir mensaje |
-| P | Repetir la secuencia disponible, sin volver a traducir |
+| `Enter` | Capturar una seña |
+| `Space` | Insertar espacio |
+| `Backspace` | Borrar último elemento |
+| `Escape` | Limpiar texto |
+| `T` | Traducir |
+| `P` | Repetir la secuencia visual |
 
-La ayuda Atajos / Shortcuts muestra este mapa. Los atajos se ignoran dentro
-de botones, campos, selectores, contenido editable y otros controles. También
-se ignoran teclas mantenidas, combinaciones con modificadores y composición
-de texto. Conservan las restricciones de sus botones correspondientes.
+Los atajos únicamente se ejecutan cuando las condiciones necesarias para cada operación se encuentran disponibles.
 
-Una captura válida muestra una confirmación visual; la no detección aparece
-como advertencia para reintentar. La confirmación de traducción deja de ser
-vigente al iniciar otra operación. Un resultado nuevo correcto desplaza la
-vista hacia su sección; se respeta la preferencia de movimiento reducido.
+---
 
-La V2 requiere una nueva validación manual: idioma automático y manual,
-atajos fuera y dentro de controles, cámara activa/inactiva, frase y traducción
-reales, auto-scroll, repetición con P, TTS en ambas lenguas, copia, impresión,
-unresolved, cambio de sesión y desconexión del backend. Las pruebas
-automatizadas no cierran esta validación ni sustituyen evaluación con usuarios.
+# Pruebas
 
-1. Iniciar FastAPI con un worker y verificar su arranque completo.
-2. Iniciar Vite con `npm run dev`.
-3. Abrir el frontend y comprobar que indique Backend conectado.
-4. Seleccionar ASL e iniciar sesión; comprobar ASL → LSM.
-5. Activar webcam y aceptar el permiso. Probar también la denegación y recuperación del permiso.
-6. Capturar una letra real, comprobando que el espejo visual no altere su reconocimiento.
-7. Revisar la confianza y desplegar las alternativas Top-k.
-8. Construir una frase en inglés con capturas y espacios; probar Borrar último y Limpiar.
-9. Pulsar Traducir y verificar que los controles se bloqueen mientras espera la llamada real a Gemini.
-10. Comprobar texto reconocido, corregido y traducción al español.
-11. Verificar reproducción automática de todos los videos en el orden recibido y el indicador de posición.
-12. Probar Pausar y Reproducir dentro de un clip.
-13. Probar Anterior y Siguiente, incluidos los límites de la secuencia.
-14. Repetir secuencia; en la pestaña Network comprobar que no se envíe otro POST a `/translations`.
-15. Escuchar el texto corregido en inglés (`en-US`).
-16. Escuchar la traducción en español (`es-MX`).
-17. Copiar ambos textos y probar Imprimir con la vista previa de impresión.
-18. Probar una entrada fuera del vocabulario: verificar la respuesta real `unresolved`, total o parcial, sin tratarla como fallo fatal.
-19. Cambiar a LSM, comprobar que se elimine la sesión anterior y repetir una frase en español con salida ASL. Probar también error SC-04 y reintento cuando sea posible.
-20. Cerrar sesión y desactivar cámara. Comprobar liberación de cámara, eliminación de sesión y comportamiento al cerrar la pestaña.
+## Backend
 
-Validar además la interfaz en laptop y tablet, navegación por teclado, foco,
-compatibilidad de los códecs MP4 y funcionamiento de voz/portapapeles en el
-navegador utilizado durante la defensa. Las pruebas simuladas no sustituyen
-estas comprobaciones.
+Desde la raíz del proyecto:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Frontend
+
+```bash
+cd frontend
+npm test
+```
+
+Para verificar la compilación:
+
+```bash
+npm run build
+```
+
+---
+
+# Estructura general del proyecto
+
+```text
+Sign2Sign/
+│
+├── data/
+│   ├── resources/
+│   └── vocabulary/
+│
+├── docs/
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── models/
+│   ├── asl/
+│   ├── lsm/
+│   └── mediapipe/
+│
+├── resources/
+│   ├── asl/
+│   └── lsm/
+│
+├── scripts/
+├── src/
+├── tests/
+│
+├── .env.example
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# Consideraciones y limitaciones
+
+Sign2Sign es un **prototipo académico y demostrativo**.
+
+Su alcance actual contempla principalmente:
+
+- reconocimiento de señas estáticas del alfabeto manual;
+- construcción deliberada de texto letra por letra;
+- traducción mediante idiomas puente;
+- vocabulario visual cerrado;
+- ejecución en un entorno local y controlado.
+
+El sistema no pretende representar toda la complejidad gramatical de ASL o LSM ni sustituir la labor de intérpretes profesionales.
+
+Algunas señas con componentes dinámicos son tratadas mediante una representación estática dentro del alcance definido para el prototipo.
+
+La etapa de corrección y traducción requiere conexión a Internet debido al uso de Google Gemini API.
+
+El desempeño del reconocimiento mediante webcam puede variar dependiendo de factores como iluminación, orientación de la mano, fondo y ejecución de la seña.
+
+---
+
+# Trabajo futuro
+
+Entre las posibles extensiones de Sign2Sign se encuentran:
+
+- reconocimiento de señas dinámicas;
+- procesamiento de secuencias temporales;
+- ampliación del vocabulario visual;
+- mejora de la robustez ante diferentes condiciones de captura;
+- evaluación con usuarios de las comunidades Sordas;
+- reducción de la dependencia de servicios externos;
+- despliegue del sistema fuera del entorno local.
+
+---
+
+## Trabajo Terminal
+
+Proyecto desarrollado en la **Escuela Superior de Cómputo del Instituto Politécnico Nacional (ESCOM-IPN)**.
+
+**Sign2Sign: Diseño e implementación de un sistema bilingüe de traducción automática para lenguas de señas (ASL y LSM) mediante técnicas de inteligencia artificial.**
